@@ -1,15 +1,41 @@
 import React from 'react';
 import Constants from 'expo-constants';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Dimensions } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import LinearGradient from 'react-native-linear-gradient';
-
+import {
+   LineChart,
+   BarChart,
+   PieChart,
+   ProgressChart,
+   ContributionGraph,
+   StackedBarChart
+} from "react-native-chart-kit";
+import { history_calls } from './data/history_calls';
+ 
 const Stack = createStackNavigator();
+const screenWidth = Dimensions.get("window").width;
+
+const chartConfig = {
+   backgroundGradientFrom: "#fff",
+   backgroundGradientTo: "#fff",
+   fillShadowGradient: 'rgba(22, 165, 150)',
+   fillShadowGradientOpacity: 0.3,
+   color: (opacity = 1) => `rgba(50, 50, 50, ${opacity})`,
+   strokeWidth: 2,
+   barPercentage: 0.5,
+   useShadowColorFromDataset: false
+ };
 
 const AnalyticsScreen = ({navigator}) => {
    return(
       <View style={styles.container}>
-         <Text>Hello</Text>
+         <LineChart
+            data={history_calls}
+            width={screenWidth}
+            height={220}
+            chartConfig={chartConfig}
+         />
       </View>
    )
 }
@@ -42,7 +68,15 @@ const styles = StyleSheet.create({
      flex: 1,
      backgroundColor: '#fff',
      alignItems: 'center',
-     justifyContent: 'center',
+   //   justifyContent: 'center',
+   },
+   chartContainer: {
+      backgroundColor: 'white',
+      width: '90%',
+      marginTop: 20,
+      paddingVertical: 20,
+      alignItems: 'center',
+      justifyContent: 'center',
    },
 });
  
