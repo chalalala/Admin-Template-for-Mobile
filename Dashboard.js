@@ -1,10 +1,9 @@
 import React from 'react';
 import Constants from 'expo-constants';
-import { StyleSheet, Text, View, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, Dimensions } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 // import LinearGradient from 'react-native-linear-gradient';
-import { Dimensions } from "react-native";
-import { data } from './data.js';
+import { distribution } from './data/distribution.js';
 
 import {
    LineChart,
@@ -24,10 +23,10 @@ const chartConfig = {
    backgroundGradientTo: "#08130D",
    backgroundGradientToOpacity: 0.5,
    color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
-   strokeWidth: 2, // optional, default 3
+   strokeWidth: 2,
    barPercentage: 0.5,
-   useShadowColorFromDataset: false // optional
- };
+   useShadowColorFromDataset: false
+};
 
 const DashboardScreen = ({navigator}) => {
    return(
@@ -48,7 +47,7 @@ const DashboardScreen = ({navigator}) => {
             <View style={styles.chartContainer}>
                <Text style={styles.label}>Distribution of users</Text>
                <PieChart
-                  data={data}
+                  data={distribution}
                   width={screenWidth*0.8}
                   height={170}
                   chartConfig={chartConfig}
