@@ -14,9 +14,9 @@ const hidePwd = () => {
 }
 
 const AccountScreen = ({navigator}) => {
-   const [uid,setUID] = useState("");
-   const [pwd,setPwd] = useState("");
-   const [secure,setSecure] = useState(true);
+   // const [uid,setUID] = useState("");
+   // const [pwd,setPwd] = useState("");
+   // const [secure,setSecure] = useState(true);
 
    return(
       <View style={styles.container}>
@@ -56,7 +56,7 @@ export default function Account({route}){
             //    />
             // ),
             headerStyle: {
-               backgroundColor: '#298299'
+               backgroundColor: VTGREEN
             },
             headerTintColor: 'white',
             headerTitleAlign: 'center'
@@ -66,6 +66,9 @@ export default function Account({route}){
       </Stack.Navigator>
    )
 } 
+
+const VTGREEN = "#17ADB0";
+const GREYCOLOR = "#bbbfca";
 
 const styles = StyleSheet.create({
    container: {
@@ -84,7 +87,7 @@ const styles = StyleSheet.create({
       marginBottom: 50,
    },
    avatar: {
-      color: '#bbbfca',
+      color: GREYCOLOR,
       marginBottom: 10,
    },
    inputContainer: {
@@ -96,19 +99,19 @@ const styles = StyleSheet.create({
       fontSize: 16,
       fontWeight: 'bold',
       marginTop: 10,
-      color: '#bbbfca',
+      color: GREYCOLOR,
       alignSelf: 'flex-start',
    },
    textContainer: {
       borderBottomWidth: 0.5,
-      borderColor: '#3aa2bd',
-      color: '#3aa2bd',
+      borderColor: VTGREEN,
+      color: VTGREEN,
       width: '100%',
       fontSize: 20,
       paddingVertical: 5,
    },
    loginButtonContainer: {
-      backgroundColor: '#3aa2bd',
+      backgroundColor: VTGREEN,
       borderRadius: 10,
       width: 250,
       height: 50,

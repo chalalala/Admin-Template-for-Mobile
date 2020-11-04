@@ -20,6 +20,7 @@ export default function App() {
   return (
     <NavigationContainer>
       <Tab.Navigator
+        initialRouteName="Account"
         screenOptions={({route}) => ({
           tabBarIcon: ({focused}) => 
           (<MaterialCommunityIcons

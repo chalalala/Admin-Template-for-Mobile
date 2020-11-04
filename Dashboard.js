@@ -2,7 +2,7 @@ import React from 'react';
 import Constants from 'expo-constants';
 import { StyleSheet, Text, View, ScrollView, Dimensions } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
-// import LinearGradient from 'react-native-linear-gradient';
+import LinearGradient from 'expo-linear-gradient';
 import { distribution } from './data/distribution.js';
 
 import {
@@ -12,7 +12,7 @@ import {
    ProgressChart,
    ContributionGraph,
    StackedBarChart
- } from "react-native-chart-kit";
+} from "react-native-chart-kit";
 
 const Stack = createStackNavigator();
 const screenWidth = Dimensions.get("window").width;
@@ -31,17 +31,18 @@ const chartConfig = {
 const DashboardScreen = ({navigator}) => {
    return(
       <ScrollView>
+         {/* <LinearGradient colors={[VTBLUE,VTGREEN]}> */}
          <View style={styles.container}>
             <View style={styles.card}>
                <View>
                   <Text style={styles.label}>Active user</Text>
-                  <Text>300/400</Text>
+                  <Text style={styles.value}>300/400</Text>
                </View>
             </View>
             
             <View style={styles.card}>
                <Text style={styles.label}>Total call</Text>
-               <Text>10.000.000</Text>
+               <Text style={styles.value}>10.000.000</Text>
             </View>
 
             <View style={styles.chartContainer}>
@@ -57,6 +58,7 @@ const DashboardScreen = ({navigator}) => {
                />
             </View>
          </View>
+         {/* </LinearGradient> */}
       </ScrollView>
    )
 }
@@ -73,7 +75,7 @@ export default function Dashboard({route}){
             //    />
             // ),
             headerStyle: {
-               backgroundColor: '#298299'
+               backgroundColor: VTGREEN
             },
             headerTintColor: 'white',
             headerTitleAlign: 'center'
@@ -83,6 +85,9 @@ export default function Dashboard({route}){
       </Stack.Navigator>
    )
 } 
+
+const VTBLUE = "#007DDD";
+const VTGREEN = "#17ADB0";
 
 const styles = StyleSheet.create({
    container: {
@@ -122,6 +127,10 @@ const styles = StyleSheet.create({
       fontWeight: 'bold',
       marginBottom: 7,
       marginRight: 5,
+   },
+   value: {
+      fontSize: 16,
+      color: 'grey',
    },
    chartContainer: {
       backgroundColor: 'white',

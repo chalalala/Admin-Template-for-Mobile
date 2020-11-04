@@ -52,7 +52,7 @@ export default function Analytics({route}){
             //    />
             // ),
             headerStyle: {
-               backgroundColor: '#298299'
+               backgroundColor: VTGREEN
             },
             headerTintColor: 'white',
             headerTitleAlign: 'center'
@@ -62,6 +62,8 @@ export default function Analytics({route}){
       </Stack.Navigator>
    )
 } 
+
+const VTGREEN = "#17ADB0";
 
 const styles = StyleSheet.create({
    container: {
