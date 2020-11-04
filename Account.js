@@ -6,40 +6,18 @@ import LinearGradient from 'react-native-linear-gradient';
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { MaterialIcons } from '@expo/vector-icons'; 
+import colors from './colors';
  
 const Stack = createStackNavigator();
 
-const hidePwd = () => {
-   this.value 
-}
-
-const AccountScreen = ({navigator}) => {
-   // const [uid,setUID] = useState("");
-   // const [pwd,setPwd] = useState("");
-   // const [secure,setSecure] = useState(true);
-
+const AccountScreen = () => {
    return(
       <View style={styles.container}>
-         {/* <MaterialIcons name="account-circle" size={150} color="black" style={styles.avatar}/> */}
-         {/* <Text style={styles.title}>Sign In</Text> */}
-         <View style={styles.inputContainer}>
-            <Text style={styles.inputLabel}>User ID</Text>
-            <TextInput style={styles.textContainer}
-            />
-
-            <Text style={styles.inputLabel}>Password</Text>
-            
-            <TextInput
-               style={styles.textContainer}
-               secureTextEntry={true}
-               textContentType="password">
-            </TextInput>
-            {/* <MaterialCommunityIcons name={secure ? "eye-off" : "eye"} size={24} color="black" /> */}
-         
-            <TouchableOpacity style={styles.loginButtonContainer}>
-               <Text style={styles.loginButtonText}>Sign In</Text>
-            </TouchableOpacity>
-         </View>
+         <MaterialIcons name="account-circle" size={150} color="black" style={styles.avatar}/>
+         <Text style={styles.title}>Misora Doan</Text>
+         <TouchableOpacity>
+            <Text style={styles.logoutText}>Logout</Text>
+         </TouchableOpacity>
       </View>
    )
 }
@@ -47,7 +25,7 @@ const AccountScreen = ({navigator}) => {
 export default function Account({route}){
    return(
       <Stack.Navigator
-         initialRouteName="Account"
+         initialRouteName="LoginScreen"
          headerMode="screen"
          screenOptions={{
             // headerBackground: () => (
@@ -56,7 +34,7 @@ export default function Account({route}){
             //    />
             // ),
             headerStyle: {
-               backgroundColor: VTGREEN
+               backgroundColor: colors("VTGREEN")
             },
             headerTintColor: 'white',
             headerTitleAlign: 'center'
@@ -124,5 +102,9 @@ const styles = StyleSheet.create({
       fontSize: 18,
       fontWeight: '700',
    },
+   logoutText: {
+      fontSize: 18,
+      color: 'grey',
+   }
 });
  

@@ -1,14 +1,19 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createStackNavigator } from '@react-navigation/stack';
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
+import colors from './colors';
 
 import Dashboard from './Dashboard';
 import Analytics from './Analytics';
 import Account from './Account';
+// import LoginScreen from './LoginScreen';
 
+const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
+// var loggedin = false;
 
 const routeIcons = {
   Dashboard: "view-dashboard",
@@ -17,8 +22,11 @@ const routeIcons = {
 };
 
 export default function App() {
-  return (
-    <NavigationContainer>
+  const [loggedin, setLoggedIn] = useState(false);
+
+  const InAppScreen = ({navigator}) => {
+    return(
+      <NavigationContainer>
       <Tab.Navigator
         initialRouteName="Account"
         screenOptions={({route}) => ({
@@ -39,7 +47,55 @@ export default function App() {
         <Tab.Screen name="Analytics" component={Analytics}/>
         <Tab.Screen name="Account" component={Account}/>
       </Tab.Navigator>
-    </NavigationContainer>
+      </NavigationContainer>
+    )
+  }
+
+  const LoginScreen = ({navigation}) => {
+    // const [uid,setUID] = useState("");
+    // const [pwd,setPwd] = useState("");
+    // const [secure,setSecure] = useState(true);
+  
+    return(
+       <View style={styles.container}>
+          <View style={styles.inputContainer}>
+            <Text style={styles.inputLabel}>User ID</Text>
+            <TextInput style={styles.textContainer}
+            />
+  
+            <Text style={styles.inputLabel}>Password</Text>
+            
+            <TextInput
+              style={styles.textContainer}
+              secureTextEntry={true}
+              textContentType="password">
+            </TextInput>
+             {/* <MaterialCommunityIcons name={secure ? "eye-off" : "eye"} size={24} color="black" /> */}
+          
+            <TouchableOpacity style={styles.loginButtonContainer}
+              onPress={() => setLoggedIn(true)}
+            >
+              <Text style={styles.loginButtonText}>Sign In</Text>
+            </TouchableOpacity>
+          </View>
+       </View>
+    )
+  }
+
+  return (
+    loggedin ? <InAppScreen/> : <LoginScreen/> 
+    // <NavigationContainer>
+    //   <Stack.Navigator
+    //     initialRouteName="LoginScreen"
+    //     screenOptions={{
+    //       headerMode: 'none',
+    //       headerShown:false
+    //     }}
+    //   >
+    //     <Stack.Screen name="LoginScreen" component={LoginScreen}/>
+    //     <Stack.Screen name="inAppScreen" component={inAppScreen}/>
+    //   </Stack.Navigator>
+    // </NavigationContainer>
   );
 }
 
@@ -50,4 +106,52 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  row: {
+     flexDirection: 'row',
+  },
+  title: {
+     color: '#3aa2bd',
+     fontSize: 30,
+     fontWeight: 'bold',
+     marginBottom: 50,
+  },
+  avatar: {
+     color: colors("GREYCOLOR"),
+     marginBottom: 10,
+  },
+  inputContainer: {
+     width: '70%',
+     alignItems: 'center',
+  },
+  inputLabel: {
+     width:100,
+     fontSize: 16,
+     fontWeight: 'bold',
+     marginTop: 10,
+     color: colors("GREYCOLOR"),
+     alignSelf: 'flex-start',
+  },
+  textContainer: {
+     borderBottomWidth: 0.5,
+     borderColor: colors("VTGREEN"),
+     color: colors("VTGREEN"),
+     width: '100%',
+     fontSize: 20,
+     paddingVertical: 5,
+  },
+  loginButtonContainer: {
+     backgroundColor: colors("VTGREEN"),
+     borderRadius: 10,
+     width: 250,
+     height: 50,
+     justifyContent: 'center',
+     alignItems: 'center',
+     marginTop: 40,
+  },
+  loginButtonText: {
+     color: 'white',
+     fontSize: 18,
+     fontWeight: '700',
+  },
 });
+

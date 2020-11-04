@@ -4,6 +4,7 @@ import { StyleSheet, Text, View, ScrollView, Dimensions } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import LinearGradient from 'expo-linear-gradient';
 import { distribution } from './data/distribution.js';
+import colors from './colors';
 
 import {
    LineChart,
@@ -31,7 +32,7 @@ const chartConfig = {
 const DashboardScreen = ({navigator}) => {
    return(
       <ScrollView>
-         {/* <LinearGradient colors={[VTBLUE,VTGREEN]}> */}
+         {/* <LinearGradient colors={[VTBLUE,VTGREEN]}/> */}
          <View style={styles.container}>
             <View style={styles.card}>
                <View>
@@ -58,7 +59,7 @@ const DashboardScreen = ({navigator}) => {
                />
             </View>
          </View>
-         {/* </LinearGradient> */}
+
       </ScrollView>
    )
 }
@@ -75,7 +76,7 @@ export default function Dashboard({route}){
             //    />
             // ),
             headerStyle: {
-               backgroundColor: VTGREEN
+               backgroundColor: colors("VTGREEN")
             },
             headerTintColor: 'white',
             headerTitleAlign: 'center'
@@ -88,6 +89,7 @@ export default function Dashboard({route}){
 
 const VTBLUE = "#007DDD";
 const VTGREEN = "#17ADB0";
+// const DGREEN = "#319772";
 
 const styles = StyleSheet.create({
    container: {
@@ -123,14 +125,16 @@ const styles = StyleSheet.create({
       // elevation: 3,
    },
    label: {
+      color: 'grey',
       fontSize: 20,
-      fontWeight: 'bold',
-      marginBottom: 7,
+      fontWeight: '600',
+      marginBottom: 10,
       marginRight: 5,
    },
    value: {
-      fontSize: 16,
-      color: 'grey',
+      fontSize: 30,
+      color: colors("VTGREEN"),
+      // textAlign: 'center',
    },
    chartContainer: {
       backgroundColor: 'white',

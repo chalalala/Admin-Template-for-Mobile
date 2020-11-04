@@ -3,6 +3,8 @@ import Constants from 'expo-constants';
 import { StyleSheet, Text, View, Dimensions } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import LinearGradient from 'react-native-linear-gradient';
+import colors from './colors';
+
 import {
    LineChart,
    BarChart,
@@ -52,7 +54,7 @@ export default function Analytics({route}){
             //    />
             // ),
             headerStyle: {
-               backgroundColor: VTGREEN
+               backgroundColor: colors("VTGREEN")
             },
             headerTintColor: 'white',
             headerTitleAlign: 'center'
