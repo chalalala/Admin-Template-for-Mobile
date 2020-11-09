@@ -5,14 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import LinearGradient from 'expo-linear-gradient';
 import colors from './colors';
 
-import {
-   LineChart,
-   BarChart,
-   PieChart,
-   ProgressChart,
-   ContributionGraph,
-   StackedBarChart
-} from "react-native-chart-kit";
+import { DataTable } from 'react-native-paper';
 
 const Stack = createStackNavigator();
 const screenWidth = Dimensions.get("window").width;
@@ -44,8 +37,46 @@ const DashboardScreen = ({navigator}) => {
                <Text style={styles.label}>Total call</Text>
                <Text style={styles.value}>10.000.000</Text>
             </View>
-         </View>
 
+            <View style={styles.card}>
+               <ScrollView horizontal>
+                  <DataTable style={{width:500}}>
+                     <DataTable.Header>
+                        <DataTable.Title>ID</DataTable.Title>
+                        <DataTable.Title>Tel</DataTable.Title>
+                        <DataTable.Title>City</DataTable.Title>
+                        <DataTable.Title>Birth</DataTable.Title>
+                        <DataTable.Title>Label</DataTable.Title>
+                     </DataTable.Header>
+
+                     <DataTable.Row>
+                        <DataTable.Cell>001</DataTable.Cell>
+                        <DataTable.Cell>0948949848</DataTable.Cell>
+                        <DataTable.Cell>Hanoi</DataTable.Cell>
+                        <DataTable.Cell>2000</DataTable.Cell>
+                        <DataTable.Cell>Good</DataTable.Cell>
+                     </DataTable.Row>
+
+                     <DataTable.Row>
+                        <DataTable.Cell>002</DataTable.Cell>
+                        <DataTable.Cell>04892651462</DataTable.Cell>
+                        <DataTable.Cell>Hanoi</DataTable.Cell>
+                        <DataTable.Cell>2000</DataTable.Cell>
+                        <DataTable.Cell>Good</DataTable.Cell>
+                     </DataTable.Row>
+
+                     <DataTable.Pagination
+                        page={1}
+                        numberOfPages={3}
+                        onPageChange={page => {
+                        console.log(page);
+                        }}
+                        label="1-2 of 6"
+                     />
+                  </DataTable>
+               </ScrollView>
+            </View>
+         </View>
       </ScrollView>
    )
 }
