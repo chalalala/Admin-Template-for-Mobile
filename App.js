@@ -84,18 +84,6 @@ export default function App() {
 
   return (
     loggedin ? <InAppScreen/> : <LoginScreen/> 
-    // <NavigationContainer>
-    //   <Stack.Navigator
-    //     initialRouteName="LoginScreen"
-    //     screenOptions={{
-    //       headerMode: 'none',
-    //       headerShown:false
-    //     }}
-    //   >
-    //     <Stack.Screen name="LoginScreen" component={LoginScreen}/>
-    //     <Stack.Screen name="inAppScreen" component={inAppScreen}/>
-    //   </Stack.Navigator>
-    // </NavigationContainer>
   );
 }
 
@@ -128,7 +116,7 @@ const styles = StyleSheet.create({
      fontSize: 16,
      fontWeight: 'bold',
      marginTop: 10,
-     color: colors("GREYCOLOR"),
+     color: colors("GREY"),
      alignSelf: 'flex-start',
   },
   textContainer: {

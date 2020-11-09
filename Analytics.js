@@ -1,6 +1,6 @@
 import React from 'react';
 import Constants from 'expo-constants';
-import { StyleSheet, Text, View, Dimensions } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, Dimensions } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import LinearGradient from 'react-native-linear-gradient';
 import colors from './colors';
@@ -14,6 +14,7 @@ import {
    StackedBarChart
 } from "react-native-chart-kit";
 import { history_calls } from './data/history_calls';
+import { distribution } from './data/distribution.js';
 
 const Stack = createStackNavigator();
 const screenWidth = Dimensions.get("window").width;
@@ -31,14 +32,31 @@ const chartConfig = {
 
 const AnalyticsScreen = ({navigator}) => {
    return(
-      <View style={styles.container}>
-         <LineChart
-            data={history_calls}
-            width={screenWidth}
-            height={220}
-            chartConfig={chartConfig}
-         />
-      </View>
+      <ScrollView>
+         <View style={styles.container}>
+            <View style={styles.chartContainer}>
+               <LineChart
+                  data={history_calls}
+                  width={screenWidth}
+                  height={220}
+                  chartConfig={chartConfig}
+               />
+            </View>
+
+            <View style={styles.chartContainer}>
+               <Text style={styles.label}>Distribution of users</Text>
+               <PieChart
+                  data={distribution}
+                  width={screenWidth*0.8}
+                  height={170}
+                  chartConfig={chartConfig}
+                  accessor="percentage"
+                  backgroundColor="transparent"
+                  paddingLeft="0"
+               />
+            </View>
+         </View>
+      </ScrollView>
    )
 }
 
@@ -72,15 +90,21 @@ const styles = StyleSheet.create({
      flex: 1,
      backgroundColor: '#fff',
      alignItems: 'center',
-     //   justifyContent: 'center',
+     paddingBottom: 50,
    },
    chartContainer: {
       backgroundColor: 'white',
       width: '90%',
-      marginTop: 20,
-      paddingVertical: 20,
+      marginBottom: 20,
       alignItems: 'center',
-      justifyContent: 'center',
+      // justifyContent: 'center',
+   },
+   label: {
+      color: 'grey',
+      fontSize: 20,
+      fontWeight: '600',
+      marginBottom: 10,
+      marginRight: 5,
    },
 });
 

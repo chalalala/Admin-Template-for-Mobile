@@ -3,7 +3,6 @@ import Constants from 'expo-constants';
 import { StyleSheet, Text, View, ScrollView, Dimensions } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import LinearGradient from 'expo-linear-gradient';
-import { distribution } from './data/distribution.js';
 import colors from './colors';
 
 import {
@@ -44,19 +43,6 @@ const DashboardScreen = ({navigator}) => {
             <View style={styles.card}>
                <Text style={styles.label}>Total call</Text>
                <Text style={styles.value}>10.000.000</Text>
-            </View>
-
-            <View style={styles.chartContainer}>
-               <Text style={styles.label}>Distribution of users</Text>
-               <PieChart
-                  data={distribution}
-                  width={screenWidth*0.8}
-                  height={170}
-                  chartConfig={chartConfig}
-                  accessor="percentage"
-                  backgroundColor="transparent"
-                  paddingLeft="0"
-               />
             </View>
          </View>
 
@@ -111,18 +97,6 @@ const styles = StyleSheet.create({
       paddingVertical: 20,
       paddingHorizontal: 30,
       justifyContent: 'center',
-      // alignItems: 'space-around',
-      // flexDirection: 'row',
-
-      // shadowColor: "#000",
-      // shadowOffset: {
-      //    width: 0,
-      //    height: 1,
-      // },
-      // shadowOpacity: 0.22,
-      // shadowRadius: 2.22,
-      // borderRadius: 2,
-      // elevation: 3,
    },
    label: {
       color: 'grey',
