@@ -34,7 +34,7 @@ const DashboardScreen = ({navigator}) => {
          setDisplay(list_user);
       }
       else{
-         setDisplay(list_user.filter(user => user.tel === query))
+         setDisplay(list_user.filter(user => removeSpace(user.tel) === removeSpace(query)))
       }
    }
 
@@ -123,6 +123,8 @@ export default function Dashboard({route}){
       </Stack.Navigator>
    )
 } 
+
+const removeSpace = text => (text.replace(/\s/g, ''));
 
 const styles = StyleSheet.create({
    container: {
