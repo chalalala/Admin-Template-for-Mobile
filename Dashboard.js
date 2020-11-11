@@ -74,7 +74,12 @@ const DashboardScreen = ({navigator}) => {
                      </DataTable.Header>
 
                      {
-                     display.map(user => (
+                     display
+                     .slice(
+                        page*itemsPerPage,
+                        page*itemsPerPage + itemsPerPage
+                     )
+                     .map(user => (
                         <DataTable.Row key={user.id}>
                            <DataTable.Cell>{user.id}</DataTable.Cell>
                            <DataTable.Cell>{user.tel}</DataTable.Cell>
@@ -91,6 +96,7 @@ const DashboardScreen = ({navigator}) => {
                      numberOfPages={numberOfPages}
                      onPageChange={page => setPage(page)}
                      label={`${page+1} of ${numberOfPages}`}
+                     numberOfRows={itemsPerPage}
                      // style={{justifyContent: 'flex-start'}}
                   />
                   </DataTable>
