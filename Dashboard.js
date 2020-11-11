@@ -96,7 +96,6 @@ const DashboardScreen = ({navigator}) => {
                      numberOfPages={numberOfPages}
                      onPageChange={page => setPage(page)}
                      label={`${page+1} of ${numberOfPages}`}
-                     numberOfRows={itemsPerPage}
                      // style={{justifyContent: 'flex-start'}}
                   />
                   </DataTable>
