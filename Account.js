@@ -45,9 +45,6 @@ export default function Account({route}){
    )
 } 
 
-const VTGREEN = "#17ADB0";
-const GREYCOLOR = "#bbbfca";
-
 const styles = StyleSheet.create({
    container: {
      flex: 1,
@@ -59,13 +56,13 @@ const styles = StyleSheet.create({
       flexDirection: 'row',
    },
    title: {
-      color: '#3aa2bd',
+      color: colors("BGREEN"),
       fontSize: 30,
       fontWeight: 'bold',
       marginBottom: 50,
    },
    avatar: {
-      color: GREYCOLOR,
+      color: colors("GREY"),
       marginBottom: 10,
    },
    inputContainer: {
@@ -77,19 +74,19 @@ const styles = StyleSheet.create({
       fontSize: 16,
       fontWeight: 'bold',
       marginTop: 10,
-      color: GREYCOLOR,
+      color: colors("GREY"),
       alignSelf: 'flex-start',
    },
    textContainer: {
       borderBottomWidth: 0.5,
-      borderColor: VTGREEN,
-      color: VTGREEN,
+      borderColor: colors("VTGREEN"),
+      color: colors("VTGREEN"),
       width: '100%',
       fontSize: 20,
       paddingVertical: 5,
    },
    loginButtonContainer: {
-      backgroundColor: VTGREEN,
+      backgroundColor: colors("VTGREEN"),
       borderRadius: 10,
       width: 250,
       height: 50,

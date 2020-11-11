@@ -110,10 +110,6 @@ export default function Dashboard({route}){
    )
 } 
 
-// const VTBLUE = "#007DDD";
-// const VTGREEN = "#17ADB0";
-// const DGREEN = "#319772";
-
 const styles = StyleSheet.create({
    container: {
      flex: 1,
@@ -126,7 +122,6 @@ const styles = StyleSheet.create({
    card: {
       backgroundColor: 'white',
       width: '90%',
-      // height: 100,
       marginBottom: 20,
       paddingVertical: 20,
       paddingHorizontal: 30,
