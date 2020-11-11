@@ -70,7 +70,7 @@ const DashboardScreen = ({navigator}) => {
                         </DataTable.Row>
                      ))
                      }
-                  <Text style={{marginTop:20, marginLeft: 10, color:'grey'}}>Swipe right >> </Text>
+                  <Text style={{marginTop:20, marginLeft: 10, color:'grey'}}>&lt;&lt; Swipe left to see more</Text>
                   <DataTable.Pagination
                      page={page}
                      numberOfPages={numberOfPages}
