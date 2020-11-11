@@ -4,6 +4,7 @@ const dict_colors = {
    "DGREEN": "#1b6372",
    "LGREEN": "#15ab92",
    "GREY": "#bbbfca",
+   "BLACK": "#222831",
 }
 
 export default function colors(name){

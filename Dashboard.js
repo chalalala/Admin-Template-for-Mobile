@@ -47,9 +47,10 @@ const DashboardScreen = ({navigator}) => {
                <ScrollView horizontal>
                   <DataTable style={{width:700}}>
                      <Searchbar
-                        placeholder="Enter ID"
+                        placeholder="Enter phone number"
                         style={styles.searchContainer}
-                        inputStyle={{color:colors("VTGREEN")}}   
+                        inputStyle={{color:colors("BLACK")}}
+                        keyboardType='number-pad'   
                      />
                      <DataTable.Header>
                         <DataTable.Title>ID</DataTable.Title>
@@ -117,10 +118,7 @@ const styles = StyleSheet.create({
    container: {
      flex: 1,
      alignItems: 'center',
-   },
-   content: {
-      width:'100%',
-      justifyContent:'center',
+     paddingTop: 20,
    },
    row: {
       flexDirection: 'row',
@@ -129,7 +127,7 @@ const styles = StyleSheet.create({
       backgroundColor: 'white',
       width: '90%',
       // height: 100,
-      marginTop: 20,
+      marginBottom: 20,
       paddingVertical: 20,
       paddingHorizontal: 30,
       justifyContent: 'center',
