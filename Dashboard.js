@@ -23,10 +23,9 @@ const chartConfig = {
 };
 
 const DashboardScreen = ({navigator}) => {
-   const itemsPerPage = 5;
    const [page, setPage] = React.useState(0);
-   const from = page * itemsPerPage;
-   const to = (page + 1) * itemsPerPage;
+   const itemsPerPage = 5;
+   const numberOfPages = Math.ceil(list_user.length / itemsPerPage);
 
    return(
       <ScrollView>
@@ -74,9 +73,9 @@ const DashboardScreen = ({navigator}) => {
                   <Text style={{marginTop:20, marginLeft: 10, color:'grey'}}>Swipe right >> </Text>
                   <DataTable.Pagination
                      page={page}
-                     numberOfPages={Math.floor(list_user.length / itemsPerPage)}
+                     numberOfPages={numberOfPages}
                      onPageChange={page => setPage(page)}
-                     label={`${from + 1}-${to} of ${list_user.length}`}
+                     label={`${page+1} of ${numberOfPages}`}
                      // style={{justifyContent: 'flex-start'}}
                   />
                   </DataTable>
