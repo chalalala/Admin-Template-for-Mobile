@@ -5,7 +5,8 @@ import { createStackNavigator } from '@react-navigation/stack';
 import LinearGradient from 'expo-linear-gradient';
 import colors from './colors';
 
-import { DataTable } from 'react-native-paper';
+import { DataTable, Searchbar } from 'react-native-paper';
+import { list_user } from './data/list_user';
 
 const Stack = createStackNavigator();
 const screenWidth = Dimensions.get("window").width;
@@ -22,6 +23,11 @@ const chartConfig = {
 };
 
 const DashboardScreen = ({navigator}) => {
+   const itemsPerPage = 5;
+   const [page, setPage] = React.useState(0);
+   const from = page * itemsPerPage;
+   const to = (page + 1) * itemsPerPage;
+
    return(
       <ScrollView>
          {/* <LinearGradient colors={[VTBLUE,VTGREEN]}/> */}
@@ -40,7 +46,12 @@ const DashboardScreen = ({navigator}) => {
 
             <View style={styles.card}>
                <ScrollView horizontal>
-                  <DataTable style={{width:500}}>
+                  <DataTable style={{width:700}}>
+                     <Searchbar
+                        placeholder="Enter ID"
+                        style={styles.searchContainer}
+                        inputStyle={{color:colors("VTGREEN")}}   
+                     />
                      <DataTable.Header>
                         <DataTable.Title>ID</DataTable.Title>
                         <DataTable.Title>Tel</DataTable.Title>
@@ -49,30 +60,25 @@ const DashboardScreen = ({navigator}) => {
                         <DataTable.Title>Label</DataTable.Title>
                      </DataTable.Header>
 
-                     <DataTable.Row>
-                        <DataTable.Cell>001</DataTable.Cell>
-                        <DataTable.Cell>0948949848</DataTable.Cell>
-                        <DataTable.Cell>Hanoi</DataTable.Cell>
-                        <DataTable.Cell>2000</DataTable.Cell>
-                        <DataTable.Cell>Good</DataTable.Cell>
-                     </DataTable.Row>
-
-                     <DataTable.Row>
-                        <DataTable.Cell>002</DataTable.Cell>
-                        <DataTable.Cell>04892651462</DataTable.Cell>
-                        <DataTable.Cell>Hanoi</DataTable.Cell>
-                        <DataTable.Cell>2000</DataTable.Cell>
-                        <DataTable.Cell>Good</DataTable.Cell>
-                     </DataTable.Row>
-
-                     <DataTable.Pagination
-                        page={1}
-                        numberOfPages={3}
-                        onPageChange={page => {
-                        console.log(page);
-                        }}
-                        label="1-2 of 6"
-                     />
+                     {
+                     list_user.map(user => (
+                        <DataTable.Row key={user.id}>
+                           <DataTable.Cell>{user.id}</DataTable.Cell>
+                           <DataTable.Cell>{user.tel}</DataTable.Cell>
+                           <DataTable.Cell>{user.city}</DataTable.Cell>
+                           <DataTable.Cell>{user.birth}</DataTable.Cell>
+                           <DataTable.Cell>{user.label}</DataTable.Cell>
+                        </DataTable.Row>
+                     ))
+                     }
+                  <Text style={{marginTop:20, marginLeft: 10, color:'grey'}}>Swipe right >> </Text>
+                  <DataTable.Pagination
+                     page={page}
+                     numberOfPages={Math.floor(list_user.length / itemsPerPage)}
+                     onPageChange={page => setPage(page)}
+                     label={`${from + 1}-${to} of ${list_user.length}`}
+                     // style={{justifyContent: 'flex-start'}}
+                  />
                   </DataTable>
                </ScrollView>
             </View>
@@ -104,8 +110,8 @@ export default function Dashboard({route}){
    )
 } 
 
-const VTBLUE = "#007DDD";
-const VTGREEN = "#17ADB0";
+// const VTBLUE = "#007DDD";
+// const VTGREEN = "#17ADB0";
 // const DGREEN = "#319772";
 
 const styles = StyleSheet.create({
@@ -148,6 +154,11 @@ const styles = StyleSheet.create({
       paddingVertical: 20,
       alignItems: 'center',
       justifyContent: 'center',
+   },
+   searchContainer: {
+      elevation: 0,
+      borderBottomWidth: 1,
+      borderBottomColor: 'lightgrey'
    }
 });
  
