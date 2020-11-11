@@ -3,11 +3,10 @@ import Constants from 'expo-constants';
 import { StyleSheet, Text, TextInput, View } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import LinearGradient from 'react-native-linear-gradient';
-import { MaterialCommunityIcons } from '@expo/vector-icons'; 
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { MaterialIcons } from '@expo/vector-icons'; 
 import colors from './colors';
- 
+
 const Stack = createStackNavigator();
 
 const AccountScreen = () => {

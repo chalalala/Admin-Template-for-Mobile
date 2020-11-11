@@ -9,11 +9,9 @@ import colors from './colors';
 import Dashboard from './Dashboard';
 import Analytics from './Analytics';
 import Account from './Account';
-// import LoginScreen from './LoginScreen';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
-// var loggedin = false;
 
 const routeIcons = {
   Dashboard: "view-dashboard",
@@ -23,7 +21,7 @@ const routeIcons = {
 
 export default function App() {
   const [loggedin, setLoggedIn] = useState(false);
-
+  
   const InAppScreen = ({navigator}) => {
     return(
       <NavigationContainer>
