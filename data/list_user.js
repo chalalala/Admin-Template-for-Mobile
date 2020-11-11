@@ -19,5 +19,12 @@ export const list_user = [
       city: "HCM City",
       birth: 2007,
       label: "Bad"
-   }
+   },
+   {
+      id: "004",
+      tel: "0776402223",
+      city: "HCM City",
+      birth: 2007,
+      label: "Bad"
+   },
 ]

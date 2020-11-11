@@ -23,9 +23,20 @@ const chartConfig = {
 };
 
 const DashboardScreen = ({navigator}) => {
+   const [query, setQuery] = React.useState("");
    const [page, setPage] = React.useState(0);
+   const [display, setDisplay] = React.useState(list_user);
    const itemsPerPage = 5;
    const numberOfPages = Math.ceil(list_user.length / itemsPerPage);
+   
+   const filterResult = () => {
+      if (!query){
+         setDisplay(list_user);
+      }
+      else{
+         setDisplay(list_user.filter(user => user.tel === query))
+      }
+   }
 
    return(
       <ScrollView>
@@ -50,7 +61,9 @@ const DashboardScreen = ({navigator}) => {
                         placeholder="Enter phone number"
                         style={styles.searchContainer}
                         inputStyle={{color:colors("BLACK")}}
-                        keyboardType='number-pad'   
+                        onChangeText={text => setQuery(text)}
+                        onIconPress={filterResult}
+                        // keyboardType='number-pad'   
                      />
                      <DataTable.Header>
                         <DataTable.Title>ID</DataTable.Title>
@@ -61,7 +74,7 @@ const DashboardScreen = ({navigator}) => {
                      </DataTable.Header>
 
                      {
-                     list_user.map(user => (
+                     display.map(user => (
                         <DataTable.Row key={user.id}>
                            <DataTable.Cell>{user.id}</DataTable.Cell>
                            <DataTable.Cell>{user.tel}</DataTable.Cell>
@@ -72,6 +85,7 @@ const DashboardScreen = ({navigator}) => {
                      ))
                      }
                   <Text style={{marginTop:20, marginLeft: 10, color:'grey'}}>&lt;&lt; Swipe left to see more</Text>
+                  <Text></Text>
                   <DataTable.Pagination
                      page={page}
                      numberOfPages={numberOfPages}
