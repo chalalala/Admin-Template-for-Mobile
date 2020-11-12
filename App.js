@@ -5,10 +5,12 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
 import colors from './colors';
+import GlobalStateProvider, {useGlobalState} from './global.js';
 
 import Dashboard from './Dashboard';
 import Analytics from './Analytics';
 import Account from './Account';
+// import LoginScreen from './LoginScreen';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -19,69 +21,73 @@ const routeIcons = {
   Account: "account"
 };
 
-export default function App() {
-  const [loggedin, setLoggedIn] = useState(false);
-  
-  const InAppScreen = ({navigator}) => {
-    return(
-      <NavigationContainer>
-      <Tab.Navigator
-        initialRouteName="Account"
-        screenOptions={({route}) => ({
-          tabBarIcon: ({focused}) => 
-          (<MaterialCommunityIcons
-              name={routeIcons[route.name]}
-              size={24}
-              color={focused ? "#3aa2bd" : "grey"}
-          />)
-        })}
-  
-        tabBarOptions={{
-          activeTintColor: colors("BGREEN"),
-          inactiveTintColor: "grey"
-        }}
-      >
-        <Tab.Screen name="Dashboard" component={Dashboard}/>
-        <Tab.Screen name="Analytics" component={Analytics}/>
-        <Tab.Screen name="Account" component={Account}/>
-      </Tab.Navigator>
-      </NavigationContainer>
-    )
-  }
+const LoginScreen = ({navigation}) => {
+  const [state, dispatch] = useGlobalState();
+  // const [uid,setUID] = useState("");
+  // const [pwd,setPwd] = useState("");
+  // const [secure,setSecure] = useState(true);
 
-  const LoginScreen = ({navigation}) => {
-    // const [uid,setUID] = useState("");
-    // const [pwd,setPwd] = useState("");
-    // const [secure,setSecure] = useState(true);
-  
-    return(
-       <View style={styles.container}>
-          <View style={styles.inputContainer}>
-            <Text style={styles.inputLabel}>User ID</Text>
-            <TextInput style={styles.textContainer}
-            />
-  
-            <Text style={styles.inputLabel}>Password</Text>
-            
-            <TextInput
-              style={styles.textContainer}
-              secureTextEntry={true}
-              textContentType="password">
-            </TextInput>
-             {/* <MaterialCommunityIcons name={secure ? "eye-off" : "eye"} size={24} color="black" /> */}
+  return(
+     <View style={styles.container}>
+        <View style={styles.inputContainer}>
+          <Text style={styles.inputLabel}>User ID</Text>
+          <TextInput style={styles.textContainer}
+          />
+
+          <Text style={styles.inputLabel}>Password</Text>
           
-            <TouchableOpacity style={styles.loginButtonContainer}
-              onPress={() => setLoggedIn(true)}
-            >
-              <Text style={styles.loginButtonText}>Sign In</Text>
-            </TouchableOpacity>
-          </View>
-       </View>
-    )
-  }
+          <TextInput
+            style={styles.textContainer}
+            secureTextEntry={true}
+            textContentType="password">
+          </TextInput>
+           {/* <MaterialCommunityIcons name={secure ? "eye-off" : "eye"} size={24} color="black" /> */}
+        
+          <TouchableOpacity style={styles.loginButtonContainer}
+            onPress={() => dispatch({ loggedin: true })}
+          >
+            <Text style={styles.loginButtonText}>Sign In</Text>
+          </TouchableOpacity>
+        </View>
+     </View>
+  )
+}
 
+const InAppScreen = ({navigator}) => {
+  return(
+    <NavigationContainer>
+    <Tab.Navigator
+      initialRouteName="Account"
+      screenOptions={({route}) => ({
+        tabBarIcon: ({focused}) => 
+        (<MaterialCommunityIcons
+            name={routeIcons[route.name]}
+            size={24}
+            color={focused ? "#3aa2bd" : "grey"}
+        />)
+      })}
+
+      tabBarOptions={{
+        activeTintColor: colors("BGREEN"),
+        inactiveTintColor: "grey"
+      }}
+    >
+      <Tab.Screen name="Dashboard" component={Dashboard}/>
+      <Tab.Screen name="Analytics" component={Analytics}/>
+      <Tab.Screen name="Account" component={Account}/>
+    </Tab.Navigator>
+    </NavigationContainer>
+  )
+}
+
+export default function App() {
+  // const [loggedin, setLoggedIn] = useState(false);
+  const [state, dispatch] = useGlobalState();
+  
   return (
-    loggedin ? <InAppScreen/> : <LoginScreen/> 
+    // <GlobalStateProvider>
+      state.loggedin ? <InAppScreen/> : <LoginScreen/>
+    // </GlobalStateProvider>  
   );
 }
 
