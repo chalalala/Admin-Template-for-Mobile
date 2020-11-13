@@ -3,9 +3,10 @@ import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-nativ
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
+import { GlobalStateProvider, useGlobalState} from './global.js';
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
 import colors from './colors';
-import { GlobalStateProvider, useGlobalState} from './global.js';
+import { accounts } from './data/accounts.js';
 
 import Dashboard from './Dashboard';
 import Analytics from './Analytics';
@@ -22,27 +23,50 @@ const routeIcons = {
 
 const LoginScreen = ({navigation}) => {
   const [state, dispatch] = useGlobalState();
+  const [account, setAccount] = useState("");
+  const [pwd, setPwd] = useState("");
+  const [message, setMsg] = useState("");
+
+  const login = () => {
+    let _acc = accounts.find(item => item.uid === account);
+    if (_acc){
+      if (_acc.password === pwd){
+        dispatch({ user: _acc.name });
+        setMsg("");
+      }
+      else{
+        setMsg("Password does not correct.")
+      }
+    }
+    else{
+      setMsg("User ID does not exist.");
+    }
+  };
 
   return(
      <View style={styles.container}>
         <View style={styles.inputContainer}>
           <Text style={styles.inputLabel}>User ID</Text>
-          <TextInput style={styles.textContainer}
+          <TextInput
+            style={styles.textContainer}
+            onChangeText={text => setAccount(text)}
           />
 
           <Text style={styles.inputLabel}>Password</Text>
-          
           <TextInput
             style={styles.textContainer}
             secureTextEntry={true}
-            textContentType="password">
-          </TextInput>
+            textContentType="password"
+            onChangeText={text => setPwd(text)}
+          />
         
           <TouchableOpacity style={styles.loginButtonContainer}
-            onPress={() => dispatch({ loggedin: true })}
+            onPress={login}
           >
             <Text style={styles.loginButtonText}>Sign In</Text>
           </TouchableOpacity>
+
+          <Text style={styles.message}>{message}</Text>
         </View>
      </View>
   )
@@ -79,7 +103,7 @@ const MainScreen = () => {
   const [state, dispatch] = useGlobalState();
   
   return(
-    state.loggedin ? <InAppScreen/> : <LoginScreen/>
+    state.user ? <InAppScreen/> : <LoginScreen/>
   )
 };
 
@@ -145,5 +169,9 @@ const styles = StyleSheet.create({
      fontSize: 18,
      fontWeight: '700',
   },
+  message: {
+    color: 'red',
+    marginTop: 10,
+  }
 });
 

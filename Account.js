@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Constants from 'expo-constants';
 import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { GlobalStateProvider, useGlobalState} from './global.js';
+import { useGlobalState} from './global.js';
 import { MaterialIcons } from '@expo/vector-icons'; 
 import colors from './colors';
 
@@ -14,8 +14,8 @@ const AccountScreen = () => {
    return(
       <View style={styles.container}>
          <MaterialIcons name="account-circle" size={150} color="black" style={styles.avatar}/>
-         <Text style={styles.title}>Misora Doan</Text>
-         <TouchableOpacity onPress={() => dispatch({ loggedin: false })}>
+         <Text style={styles.title}>{state.user}</Text>
+         <TouchableOpacity onPress={() => dispatch({ user: "" })}>
             <Text style={styles.logoutText}>Logout</Text>
          </TouchableOpacity>
       </View>
