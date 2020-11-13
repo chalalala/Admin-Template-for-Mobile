@@ -12,7 +12,6 @@ import Dashboard from './Dashboard';
 import Analytics from './Analytics';
 import Account from './Account';
 
-const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
 const routeIcons = {
