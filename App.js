@@ -10,7 +10,6 @@ import { GlobalStateProvider, useGlobalState} from './global.js';
 import Dashboard from './Dashboard';
 import Analytics from './Analytics';
 import Account from './Account';
-// import LoginScreen from './LoginScreen';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -23,9 +22,6 @@ const routeIcons = {
 
 const LoginScreen = ({navigation}) => {
   const [state, dispatch] = useGlobalState();
-  // const [uid,setUID] = useState("");
-  // const [pwd,setPwd] = useState("");
-  // const [secure,setSecure] = useState(true);
 
   return(
      <View style={styles.container}>
@@ -41,7 +37,6 @@ const LoginScreen = ({navigation}) => {
             secureTextEntry={true}
             textContentType="password">
           </TextInput>
-          <Text>State: {state.loggedin ? "True" : "False"}</Text>
         
           <TouchableOpacity style={styles.loginButtonContainer}
             onPress={() => dispatch({ loggedin: true })}

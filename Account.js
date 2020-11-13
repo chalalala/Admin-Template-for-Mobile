@@ -1,20 +1,21 @@
 import React, { useState } from 'react';
 import Constants from 'expo-constants';
-import { StyleSheet, Text, TextInput, View } from 'react-native';
+import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
-import LinearGradient from 'react-native-linear-gradient';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { GlobalStateProvider, useGlobalState} from './global.js';
 import { MaterialIcons } from '@expo/vector-icons'; 
 import colors from './colors';
 
 const Stack = createStackNavigator();
 
 const AccountScreen = () => {
+   const [state, dispatch] = useGlobalState();
+   
    return(
       <View style={styles.container}>
          <MaterialIcons name="account-circle" size={150} color="black" style={styles.avatar}/>
          <Text style={styles.title}>Misora Doan</Text>
-         <TouchableOpacity>
+         <TouchableOpacity onPress={() => dispatch({ loggedin: false })}>
             <Text style={styles.logoutText}>Logout</Text>
          </TouchableOpacity>
       </View>
