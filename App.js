@@ -80,12 +80,18 @@ const InAppScreen = ({navigator}) => {
   )
 }
 
-export default function App() {
+const MainScreen = () => {
   const [state, dispatch] = useGlobalState();
   
+  return(
+    state.loggedin ? <InAppScreen/> : <LoginScreen/>
+  )
+};
+
+export default function App() {
   return (
     <GlobalStateProvider>
-      {state.loggedin ? <InAppScreen/> : <LoginScreen/>}
+      <MainScreen/>
     </GlobalStateProvider>  
   );
 }
