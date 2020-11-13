@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { createStackNavigator } from '@react-navigation/stack';
 import { GlobalStateProvider, useGlobalState} from './global.js';
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
 import colors from './colors';
