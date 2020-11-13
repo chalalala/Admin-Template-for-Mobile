@@ -1,7 +1,6 @@
 import React from 'react';
 
 const defaultGlobalState = {
-   loggedin: false,
    user: null,
 };
 const globalStateContext = React.createContext(defaultGlobalState);
