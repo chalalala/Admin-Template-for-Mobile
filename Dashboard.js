@@ -21,15 +21,15 @@ const Stack = createStackNavigator();
 const screenWidth = Dimensions.get("window").width;
 
 const chartConfig = {
-   backgroundGradientFrom: "#1E2923",
-   backgroundGradientFromOpacity: 0,
-   backgroundGradientTo: "#08130D",
-   backgroundGradientToOpacity: 0.5,
-   color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
+   backgroundGradientFrom: "#fff",
+   backgroundGradientTo: "#fff",
+   fillShadowGradient: 'rgba(22, 165, 150)',
+   fillShadowGradientOpacity: 0.3,
+   color: (opacity = 1) => `rgba(50, 50, 50, ${opacity})`,
    strokeWidth: 2,
    barPercentage: 0.5,
    useShadowColorFromDataset: false
-};
+ };
 
 const Card = (props) => {
    return(
@@ -57,24 +57,48 @@ const SingleInfo = ({route}) => {
       legendFontSize: 15
    },
    ]
+
+   const history_calls = {
+      labels: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],
+      datasets: [
+        {
+          data: user.call_lengths,
+          color: (opacity = 1) => `rgb(73, 178, 123, ${opacity})`,
+          strokeWidth: 2
+        }
+      ],
+      legend: ["Lengths of calls"]
+    }; 
    
    return(
-      <View style={styles.container}>
-         <Card label='Number of Calls' value={user.calls} style={styles.paddingCard}/>
+      <ScrollView>
+         <View style={styles.container}>   
+            <Card label='Number of Calls' value={user.calls} style={styles.paddingCard}/>
 
-         <View style={[styles.subcard, styles.card]}>
-            <Text style={styles.label}>Percentage of successful calls</Text>
-            <PieChart
-               data={data}
-               width={screenWidth*0.8}
-               height={120}
-               chartConfig={chartConfig}
-               accessor="percentage"
-               backgroundColor="transparent"
-               paddingLeft="0"
-            />
+            <View style={[styles.subcard, styles.card]}>
+               <Text style={styles.label}>Percentage of successful calls</Text>
+               <PieChart
+                  data={data}
+                  width={screenWidth*0.8}
+                  height={120}
+                  chartConfig={chartConfig}
+                  accessor="percentage"
+                  backgroundColor="transparent"
+                  paddingLeft="0"
+               />
+            </View>
+
+            <View style={[styles.subcard,{marginBottom:20}]}>
+               <LineChart
+                  data={history_calls}
+                  width={screenWidth*0.8}
+                  height={200}
+                  chartConfig={chartConfig}
+               />
+            </View>
+         
          </View>
-      </View>
+      </ScrollView>
    )
 }
 
@@ -126,7 +150,7 @@ const DashboardScreen = ({navigation}) => {
                         <DataTable.Title>No. of calls</DataTable.Title>
                         <DataTable.Title>Success calls</DataTable.Title>
                         <DataTable.Title>Data used</DataTable.Title>
-                        <DataTable.Title>Calls length</DataTable.Title>
+                        {/* <DataTable.Title>Calls length</DataTable.Title> */}
                         <DataTable.Title>Spent</DataTable.Title>
                         <DataTable.Title>Recharge</DataTable.Title>
                         <DataTable.Title>Loan</DataTable.Title>
@@ -147,7 +171,7 @@ const DashboardScreen = ({navigation}) => {
                               <DataTable.Cell>{user.calls}</DataTable.Cell>
                               <DataTable.Cell>{user.success_calls}</DataTable.Cell>
                               <DataTable.Cell>{user.data_used}</DataTable.Cell>
-                              <DataTable.Cell>{user.call_lengths}</DataTable.Cell>
+                              {/* <DataTable.Cell>{user.call_lengths}</DataTable.Cell> */}
                               <DataTable.Cell>{user.spent}</DataTable.Cell>
                               <DataTable.Cell>{user.recharge}</DataTable.Cell>
                               <DataTable.Cell>{user.loan}</DataTable.Cell>
