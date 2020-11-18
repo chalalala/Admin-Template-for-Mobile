@@ -7,6 +7,7 @@ import colors from './colors';
 
 import { DataTable, Searchbar } from 'react-native-paper';
 import { list_user } from './data/list_user';
+import { general_statistics as gs} from './data/general_statistics';
 
 const Stack = createStackNavigator();
 const screenWidth = Dimensions.get("window").width;
@@ -22,6 +23,14 @@ const chartConfig = {
    useShadowColorFromDataset: false
 };
 
+const Card = (props) => {
+   return(
+      <View style={styles.subcard}>
+         <Text style={styles.label}>{props.label}</Text>
+         <Text style={styles.value}>{props.value}</Text>
+      </View>
+   )
+}
 const DashboardScreen = ({navigator}) => {
    const [query, setQuery] = React.useState("");
    const [page, setPage] = React.useState(0);
@@ -43,20 +52,20 @@ const DashboardScreen = ({navigator}) => {
          {/* <LinearGradient colors={[VTBLUE,VTGREEN]}/> */}
          <View style={styles.container}>
             <View style={styles.card}>
-               <View>
-                  <Text style={styles.label}>Active user</Text>
-                  <Text style={styles.value}>300/400</Text>
-               </View>
+               <ScrollView horizontal>
+                  <View style={{width:screenWidth*0.9*gs.length, flexDirection:'row'}}>
+                  {
+                     gs.map(item => (
+                        <Card label={item.label} value={item.value} key={item.label}/>
+                     ))
+                  }
+                  </View>
+               </ScrollView>
             </View>
             
-            <View style={styles.card}>
-               <Text style={styles.label}>Total call</Text>
-               <Text style={styles.value}>10.000.000</Text>
-            </View>
-
-            <View style={styles.card}>
+            <View style={styles.paddingCard}>
                <ScrollView horizontal>
-                  <DataTable style={{width:700}}>
+                  <DataTable style={{width:900}}>
                      <Searchbar
                         placeholder="Enter phone number"
                         style={styles.searchContainer}
@@ -67,9 +76,13 @@ const DashboardScreen = ({navigator}) => {
                      />
                      <DataTable.Header>
                         <DataTable.Title>ID</DataTable.Title>
-                        <DataTable.Title>Tel</DataTable.Title>
-                        <DataTable.Title>City</DataTable.Title>
-                        <DataTable.Title>Birth</DataTable.Title>
+                        <DataTable.Title>No. of calls</DataTable.Title>
+                        <DataTable.Title>Success calls</DataTable.Title>
+                        <DataTable.Title>Data used</DataTable.Title>
+                        <DataTable.Title>Calls length</DataTable.Title>
+                        <DataTable.Title>Spent</DataTable.Title>
+                        <DataTable.Title>Recharge</DataTable.Title>
+                        <DataTable.Title>Loan</DataTable.Title>
                         <DataTable.Title>Label</DataTable.Title>
                      </DataTable.Header>
 
@@ -82,9 +95,13 @@ const DashboardScreen = ({navigator}) => {
                      .map(user => (
                         <DataTable.Row key={user.id}>
                            <DataTable.Cell>{user.id}</DataTable.Cell>
-                           <DataTable.Cell>{user.tel}</DataTable.Cell>
-                           <DataTable.Cell>{user.city}</DataTable.Cell>
-                           <DataTable.Cell>{user.birth}</DataTable.Cell>
+                           <DataTable.Cell>{user.calls}</DataTable.Cell>
+                           <DataTable.Cell>{user.success_calls}</DataTable.Cell>
+                           <DataTable.Cell>{user.data_used}</DataTable.Cell>
+                           <DataTable.Cell>{user.call_lengths}</DataTable.Cell>
+                           <DataTable.Cell>{user.spent}</DataTable.Cell>
+                           <DataTable.Cell>{user.recharge}</DataTable.Cell>
+                           <DataTable.Cell>{user.loan}</DataTable.Cell>
                            <DataTable.Cell>{user.label}</DataTable.Cell>
                         </DataTable.Row>
                      ))
@@ -112,17 +129,17 @@ export default function Dashboard({route}){
          initialRouteName="Dashboard"
          headerMode="screen"
          screenOptions={{
-            headerBackground: () => (
-               <LinearGradient
-                  colors={['#21C99F','#298299']}
-                  style={{
-                     position: 'absolute',
-                     left: 0,
-                     right: 0,
-                     top: 0,
-                  }}
-               />
-            ),
+            // headerBackground: () => (
+            //    <LinearGradient
+            //       colors={['#21C99F','#298299']}
+            //       style={{
+            //          position: 'absolute',
+            //          left: 0,
+            //          right: 0,
+            //          top: 0,
+            //       }}
+            //    />
+            // ),
             headerStyle: {
                backgroundColor: colors("VTGREEN")
             },
@@ -148,7 +165,22 @@ const styles = StyleSheet.create({
    },
    card: {
       backgroundColor: 'white',
-      width: '90%',
+      width: screenWidth*0.9,
+      marginHorizontal:30,
+      marginBottom: 20,
+      paddingVertical: 20,
+      justifyContent: 'center',
+   },
+   subcard: {
+      width: screenWidth*0.9,
+      alignItems: 'center',
+      justifyContent: 'center',
+      textAlign: 'center',
+   },
+   paddingCard: {
+      backgroundColor: 'white',
+      width: screenWidth*0.9,
+      marginHorizontal:30,
       marginBottom: 20,
       paddingVertical: 20,
       paddingHorizontal: 30,
