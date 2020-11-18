@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, Dimensions, TextInput, Text, TouchableOpacity, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { GlobalStateProvider, useGlobalState} from './global.js';
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
+import { LinearGradient } from 'expo-linear-gradient';
+// import { TextInput } from 'react-native-paper';
+
 import colors from './colors';
 import { accounts } from './data/accounts.js';
 
@@ -43,9 +46,24 @@ const LoginScreen = ({navigation}) => {
 
   return(
      <View style={styles.container}>
+        <LinearGradient
+          // Background Linear Gradient
+          colors={["#19adb1", "#0a6dc3"]}
+          style={{
+            position: 'absolute',
+            left: 0,
+            right: 0,
+            top: 0,
+            height: Dimensions.get("window").height,
+          }}
+          // start={[0, 0]} end={[1, 0]}
+        />
         <View style={styles.inputContainer}>
           <Text style={styles.inputLabel}>User ID</Text>
           <TextInput
+            // label='User ID'
+            // mode='outlined'
+            selectionColor={colors("VTBLUE")}
             style={styles.textContainer}
             onChangeText={text => setAccount(text)}
           />
@@ -142,20 +160,22 @@ const styles = StyleSheet.create({
      fontSize: 16,
      fontWeight: 'bold',
      marginTop: 10,
-     color: colors("GREY"),
+     color: 'white',
+     opacity: 0.8,
      alignSelf: 'flex-start',
   },
   textContainer: {
      borderBottomWidth: 0.5,
-     borderColor: colors("VTGREEN"),
-     color: colors("VTGREEN"),
+     borderColor: 'white',
+     backgroundColor: 'transparent',
+     color: 'white',
      width: '100%',
      fontSize: 20,
      paddingVertical: 5,
   },
   loginButtonContainer: {
-     backgroundColor: colors("VTGREEN"),
-     borderRadius: 10,
+     backgroundColor: 'white',
+     borderRadius: 5,
      width: 250,
      height: 50,
      justifyContent: 'center',
@@ -163,7 +183,7 @@ const styles = StyleSheet.create({
      marginTop: 40,
   },
   loginButtonText: {
-     color: 'white',
+     color: colors('VTBLUE'),
      fontSize: 18,
      fontWeight: '700',
   },

@@ -1,6 +1,6 @@
 export const accounts = [
    {
-      uid: 'user01',
+      uid: 'maidt',
       name: 'Mai Doan',
       password: '123456'
    }

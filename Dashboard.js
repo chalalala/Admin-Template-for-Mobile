@@ -2,7 +2,7 @@ import React from 'react';
 import Constants from 'expo-constants';
 import { StyleSheet, Text, View, ScrollView, Dimensions } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
-import LinearGradient from 'expo-linear-gradient';
+import { LinearGradient } from 'expo-linear-gradient';
 import colors from './colors';
 
 import { DataTable, Searchbar } from 'react-native-paper';
@@ -112,11 +112,17 @@ export default function Dashboard({route}){
          initialRouteName="Dashboard"
          headerMode="screen"
          screenOptions={{
-            // headerBackground: () => (
-            //    <LinearGradient
-            //       colors={['#21C99F','#298299']}
-            //    />
-            // ),
+            headerBackground: () => (
+               <LinearGradient
+                  colors={['#21C99F','#298299']}
+                  style={{
+                     position: 'absolute',
+                     left: 0,
+                     right: 0,
+                     top: 0,
+                  }}
+               />
+            ),
             headerStyle: {
                backgroundColor: colors("VTGREEN")
             },
