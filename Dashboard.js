@@ -1,6 +1,6 @@
 import React from 'react';
 import Constants from 'expo-constants';
-import { StyleSheet, Text, View, ScrollView, Dimensions } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View, ScrollView, Dimensions } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { LinearGradient } from 'expo-linear-gradient';
 import colors from './colors';
@@ -8,6 +8,14 @@ import colors from './colors';
 import { DataTable, Searchbar } from 'react-native-paper';
 import { list_user } from './data/list_user';
 import { general_statistics as gs} from './data/general_statistics';
+import {
+   LineChart,
+   BarChart,
+   PieChart,
+   ProgressChart,
+   ContributionGraph,
+   StackedBarChart
+} from "react-native-chart-kit";
 
 const Stack = createStackNavigator();
 const screenWidth = Dimensions.get("window").width;
@@ -25,13 +33,52 @@ const chartConfig = {
 
 const Card = (props) => {
    return(
-      <View style={styles.subcard}>
+      <View style={props.style ? props.style : styles.subcard}>
          <Text style={styles.label}>{props.label}</Text>
          <Text style={styles.value}>{props.value}</Text>
       </View>
    )
 }
-const DashboardScreen = ({navigator}) => {
+
+const SingleInfo = ({route}) => {
+   let user = route.params;
+   const data = [{
+      name: "Success",
+      percentage: Math.round(user.success_calls/user.calls*100),
+      color: "#28abb9",
+      legendFontColor: "#7F7F7F",
+      legendFontSize: 15,
+   },
+   {
+      name: "Unsuccess",
+      percentage: 100-Math.round(user.success_calls/user.calls*100),
+      color: "#2d6187",
+      legendFontColor: "#7F7F7F",
+      legendFontSize: 15
+   },
+   ]
+   
+   return(
+      <View style={styles.container}>
+         <Card label='Number of Calls' value={user.calls} style={styles.paddingCard}/>
+
+         <View style={[styles.subcard, styles.card]}>
+            <Text style={styles.label}>Percentage of successful calls</Text>
+            <PieChart
+               data={data}
+               width={screenWidth*0.8}
+               height={120}
+               chartConfig={chartConfig}
+               accessor="percentage"
+               backgroundColor="transparent"
+               paddingLeft="0"
+            />
+         </View>
+      </View>
+   )
+}
+
+const DashboardScreen = ({navigation}) => {
    const [query, setQuery] = React.useState("");
    const [page, setPage] = React.useState(0);
    const [display, setDisplay] = React.useState(list_user);
@@ -43,7 +90,7 @@ const DashboardScreen = ({navigator}) => {
          setDisplay(list_user);
       }
       else{
-         setDisplay(list_user.filter(user => removeSpace(user.tel) === removeSpace(query)))
+         setDisplay(list_user.filter(user => removeSpace(user.id) === removeSpace(query)))
       }
    }
 
@@ -67,7 +114,7 @@ const DashboardScreen = ({navigator}) => {
                <ScrollView horizontal>
                   <DataTable style={{width:900}}>
                      <Searchbar
-                        placeholder="Enter phone number"
+                        placeholder="Enter user ID"
                         style={styles.searchContainer}
                         inputStyle={{color:colors("BLACK")}}
                         onChangeText={text => setQuery(text)}
@@ -93,17 +140,20 @@ const DashboardScreen = ({navigator}) => {
                         page*itemsPerPage + itemsPerPage
                      )
                      .map(user => (
-                        <DataTable.Row key={user.id}>
-                           <DataTable.Cell>{user.id}</DataTable.Cell>
-                           <DataTable.Cell>{user.calls}</DataTable.Cell>
-                           <DataTable.Cell>{user.success_calls}</DataTable.Cell>
-                           <DataTable.Cell>{user.data_used}</DataTable.Cell>
-                           <DataTable.Cell>{user.call_lengths}</DataTable.Cell>
-                           <DataTable.Cell>{user.spent}</DataTable.Cell>
-                           <DataTable.Cell>{user.recharge}</DataTable.Cell>
-                           <DataTable.Cell>{user.loan}</DataTable.Cell>
-                           <DataTable.Cell>{user.label}</DataTable.Cell>
-                        </DataTable.Row>
+                        <TouchableOpacity key={user.id}
+                           onPress={()=>navigation.navigate('SingleInfo', user)}>
+                           <DataTable.Row key={user.id}>
+                              <DataTable.Cell>{user.id}</DataTable.Cell>
+                              <DataTable.Cell>{user.calls}</DataTable.Cell>
+                              <DataTable.Cell>{user.success_calls}</DataTable.Cell>
+                              <DataTable.Cell>{user.data_used}</DataTable.Cell>
+                              <DataTable.Cell>{user.call_lengths}</DataTable.Cell>
+                              <DataTable.Cell>{user.spent}</DataTable.Cell>
+                              <DataTable.Cell>{user.recharge}</DataTable.Cell>
+                              <DataTable.Cell>{user.loan}</DataTable.Cell>
+                              <DataTable.Cell>{user.label}</DataTable.Cell>
+                           </DataTable.Row>
+                        </TouchableOpacity>
                      ))
                      }
                   <Text style={{marginTop:20, marginLeft: 10, color:'grey'}}>&lt;&lt; Swipe left to see more</Text>
@@ -148,6 +198,7 @@ export default function Dashboard({route}){
          }}
       >
          <Stack.Screen name="Dashboard" component={DashboardScreen}/>
+         <Stack.Screen name="SingleInfo" component={SingleInfo} options={{title:'Details'}}/>
       </Stack.Navigator>
    )
 } 
@@ -172,10 +223,10 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
    },
    subcard: {
+      backgroundColor: 'white',
       width: screenWidth*0.9,
       alignItems: 'center',
       justifyContent: 'center',
-      textAlign: 'center',
    },
    paddingCard: {
       backgroundColor: 'white',
