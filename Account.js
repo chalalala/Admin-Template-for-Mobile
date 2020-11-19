@@ -5,6 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { useGlobalState} from './global.js';
 import { MaterialIcons } from '@expo/vector-icons'; 
 import colors from './colors';
+import { LinearGradient } from 'expo-linear-gradient';
 
 const Stack = createStackNavigator();
 
@@ -13,6 +14,18 @@ const AccountScreen = () => {
    
    return(
       <View style={styles.container}>
+         <LinearGradient
+          // Background Linear Gradient
+          colors={["#19adb1", "#0a6dc3"]}
+          style={[{
+            position: 'absolute',
+            left: 0,
+            right: 0,
+            top: 0,
+            
+          },StyleSheet.absoluteFill]}
+          // start={[0, 0]} end={[1, 0]}
+         />
          <MaterialIcons name="account-circle" size={150} color="black" style={styles.avatar}/>
          <Text style={styles.title}>{state.user}</Text>
          <TouchableOpacity onPress={() => dispatch({ user: "" })}>
@@ -56,52 +69,19 @@ const styles = StyleSheet.create({
       flexDirection: 'row',
    },
    title: {
-      color: colors("BGREEN"),
+      color: 'white',
       fontSize: 30,
       fontWeight: 'bold',
       marginBottom: 50,
    },
    avatar: {
-      color: colors("GREY"),
-      marginBottom: 10,
-   },
-   inputContainer: {
-      width: '70%',
-      alignItems: 'center',
-   },
-   inputLabel: {
-      width:100,
-      fontSize: 16,
-      fontWeight: 'bold',
-      marginTop: 10,
-      color: colors("GREY"),
-      alignSelf: 'flex-start',
-   },
-   textContainer: {
-      borderBottomWidth: 0.5,
-      borderColor: colors("VTGREEN"),
-      color: colors("VTGREEN"),
-      width: '100%',
-      fontSize: 20,
-      paddingVertical: 5,
-   },
-   loginButtonContainer: {
-      backgroundColor: colors("VTGREEN"),
-      borderRadius: 10,
-      width: 250,
-      height: 50,
-      justifyContent: 'center',
-      alignItems: 'center',
-      marginTop: 40,
-   },
-   loginButtonText: {
       color: 'white',
-      fontSize: 18,
-      fontWeight: '700',
+      marginBottom: 10,
    },
    logoutText: {
       fontSize: 18,
-      color: 'grey',
+      color: 'white',
+      opacity: 0.8
    }
 });
  

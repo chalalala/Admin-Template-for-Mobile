@@ -72,6 +72,18 @@ const SingleInfo = ({route}) => {
    
    return(
       <ScrollView>
+         <LinearGradient
+          // Background Linear Gradient
+          colors={["#19adb1", "#0a6dc3"]}
+          style={[{
+            position: 'absolute',
+            left: 0,
+            right: 0,
+            top: 0,
+            
+          },StyleSheet.absoluteFill]}
+          // start={[0, 0]} end={[1, 0]}
+         />
          <View style={styles.container}>   
             <Card label='Number of Calls' value={user.calls} style={styles.paddingCard}/>
 
@@ -120,10 +132,21 @@ const DashboardScreen = ({navigation}) => {
 
    return(
       <ScrollView>
-         {/* <LinearGradient colors={[VTBLUE,VTGREEN]}/> */}
+         <LinearGradient
+          // Background Linear Gradient
+          colors={["#19adb1", "#0a6dc3"]}
+          style={[{
+            position: 'absolute',
+            left: 0,
+            right: 0,
+            top: 0,
+            
+          },StyleSheet.absoluteFill]}
+          // start={[0, 0]} end={[1, 0]}
+         />
          <View style={styles.container}>
-            <View style={styles.card}>
-               <ScrollView horizontal>
+            <View>
+               {/* <ScrollView horizontal>
                   <View style={{width:screenWidth*0.9*gs.length, flexDirection:'row'}}>
                   {
                      gs.map(item => (
@@ -131,7 +154,10 @@ const DashboardScreen = ({navigation}) => {
                      ))
                   }
                   </View>
-               </ScrollView>
+               </ScrollView> */}
+
+               <Card label='Active user' value='300/400' style={styles.paddingCard}/>
+               <Card label='Successful calls' value='946,348' style={styles.paddingCard}/>
             </View>
             
             <View style={styles.paddingCard}>
@@ -203,17 +229,6 @@ export default function Dashboard({route}){
          initialRouteName="Dashboard"
          headerMode="screen"
          screenOptions={{
-            // headerBackground: () => (
-            //    <LinearGradient
-            //       colors={['#21C99F','#298299']}
-            //       style={{
-            //          position: 'absolute',
-            //          left: 0,
-            //          right: 0,
-            //          top: 0,
-            //       }}
-            //    />
-            // ),
             headerStyle: {
                backgroundColor: colors("VTGREEN")
             },
@@ -272,14 +287,6 @@ const styles = StyleSheet.create({
       fontSize: 30,
       color: colors("VTGREEN"),
       // textAlign: 'center',
-   },
-   chartContainer: {
-      backgroundColor: 'white',
-      width: '90%',
-      marginTop: 20,
-      paddingVertical: 20,
-      alignItems: 'center',
-      justifyContent: 'center',
    },
    searchContainer: {
       elevation: 0,
