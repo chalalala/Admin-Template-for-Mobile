@@ -6,7 +6,7 @@ import { GlobalStateProvider, useGlobalState} from './helpers/global.js';
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
 import GradientBackground from './helpers/GradientBackground';
 
-import colors from './helpers/colors';
+import { colors } from './helpers/config';
 import { accounts } from './data/accounts.js';
 
 import Dashboard from './Dashboard';
@@ -21,7 +21,7 @@ const routeIcons = {
   Account: "account"
 };
 
-const LoginScreen = ({navigation}) => {
+const LoginScreen = () => {
   const [state, dispatch] = useGlobalState();
   const [account, setAccount] = useState("");
   const [pwd, setPwd] = useState("");
@@ -51,7 +51,7 @@ const LoginScreen = ({navigation}) => {
           <TextInput
             // label='User ID'
             // mode='outlined'
-            selectionColor={colors("VTBLUE")}
+            selectionColor={colors.VTBLUE}
             style={styles.textContainer}
             onChangeText={text => setAccount(text)}
           />
@@ -76,7 +76,7 @@ const LoginScreen = ({navigation}) => {
   )
 }
 
-const InAppScreen = ({navigator}) => {
+const InAppScreen = () => {
   return(
     <NavigationContainer>
       <Tab.Navigator
@@ -91,7 +91,7 @@ const InAppScreen = ({navigator}) => {
         })}
 
         tabBarOptions={{
-          activeTintColor: colors("BGREEN"),
+          activeTintColor: colors.BGREEN,
           inactiveTintColor: "grey"
         }}
       >
@@ -136,7 +136,7 @@ const styles = StyleSheet.create({
      marginBottom: 50,
   },
   avatar: {
-     color: colors("GREYCOLOR"),
+     color: colors.GREYCOLOR,
      marginBottom: 10,
   },
   inputContainer: {
@@ -171,7 +171,7 @@ const styles = StyleSheet.create({
      marginTop: 40,
   },
   loginButtonText: {
-     color: colors('VTBLUE'),
+     color: colors.VTBLUE,
      fontSize: 18,
      fontWeight: '700',
   },

@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View, ScrollView, Dimensions } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import GradientBackground from './helpers/GradientBackground';
-import { colors } from './helpers/colors';
+import { colors, chartConfig, screenWidth, containerWidth } from './helpers/config';
 
 import { FontAwesome5 } from '@expo/vector-icons'; 
 import {
@@ -17,73 +17,16 @@ import { history_calls } from './data/history_calls';
 import { distribution } from './data/distribution.js';
 
 const Stack = createStackNavigator();
-const screenWidth = Dimensions.get("window").width;
-
-const chartConfig = {
-   backgroundGradientFrom: "#fff",
-   backgroundGradientTo: "#fff",
-   fillShadowGradient: 'rgba(22, 165, 150)',
-   fillShadowGradientOpacity: 0.3,
-   color: (opacity = 1) => `rgba(50, 50, 50, ${opacity})`,
-   strokeWidth: 2,
-   barPercentage: 0.5,
-   useShadowColorFromDataset: false
- };
 
 const UserAnalytics = ({navigation}) => {
    return(
       <ScrollView>
-         
+         <GradientBackground/>
          <View style={styles.container}>
-            <Text>Hello</Text>
-         </View>
-      </ScrollView>
-   )
-}
-
-const AnalyticsScreen = ({navigation}) => {
-   return(
-      // <ScrollView>
-
-         <View style={styles.container}>
-            {/* <LinearGradient
-            // Background Linear Gradient
-            colors={["#19adb1", "#0a6dc3"]}
-            style={[{
-               position: 'absolute',
-               left: 0,
-               right: 0,
-               top: 0,
-               
-            },StyleSheet.absoluteFill]}
-            // start={[0, 0]} end={[1, 0]}
-            /> */}
-            <GradientBackground/>
-            <TouchableOpacity onPress={() => navigation.navigate("UserAnalytics")}>
-               <View style={[styles.card, styles.subcard]}>
-                  <FontAwesome5 name="user-friends" size={24} color="black" />
-                  <Text>User analytics</Text>
-               </View>
-            </TouchableOpacity>
-
             <View style={[styles.card, styles.subcard]}>
-               <FontAwesome5 name="user-friends" size={24} color="black" />
-               <Text>User analytics</Text>
-            </View>
-            
-            <View style={[styles.card, styles.subcard]}>
-               <FontAwesome5 name="user-friends" size={24} color="black" />
-               <Text>User analytics</Text>
-            </View>
-
-            <View style={[styles.card, styles.subcard]}>
-               <FontAwesome5 name="user-friends" size={24} color="black" />
-               <Text>User analytics</Text>
-            </View>
-            {/* <View style={[styles.card, styles.subcard]}>
                <LineChart
                   data={history_calls}
-                  width={screenWidth*0.9}
+                  width={containerWidth}
                   height={220}
                   chartConfig={chartConfig}
                />
@@ -100,13 +43,42 @@ const AnalyticsScreen = ({navigation}) => {
                   backgroundColor="transparent"
                   paddingLeft="0"
                />
-            </View> */}
+            </View>
          </View>
-      // </ScrollView>
+      </ScrollView>
    )
 }
 
-export default function Analytics({route}){
+const AnalyticsScreen = ({navigation}) => {
+   return(
+      <View style={styles.container}>
+         <GradientBackground/>
+         <TouchableOpacity onPress={() => navigation.navigate("UserAnalytics")}>
+            <View style={[styles.card, styles.subcard]}>
+               <FontAwesome5 name="user-friends" size={24} color="black" />
+               <Text>User analytics</Text>
+            </View>
+         </TouchableOpacity>
+
+         <View style={[styles.card, styles.subcard]}>
+            <FontAwesome5 name="user-friends" size={24} color="black" />
+            <Text>User analytics</Text>
+         </View>
+         
+         <View style={[styles.card, styles.subcard]}>
+            <FontAwesome5 name="user-friends" size={24} color="black" />
+            <Text>User analytics</Text>
+         </View>
+
+         <View style={[styles.card, styles.subcard]}>
+            <FontAwesome5 name="user-friends" size={24} color="black" />
+            <Text>User analytics</Text>
+         </View>
+      </View>
+   )
+}
+
+export default function Analytics(){
    return(
       <Stack.Navigator
          initialRouteName="Analytics"
@@ -140,7 +112,7 @@ const styles = StyleSheet.create({
    card: {
       backgroundColor: 'white',
       borderRadius: 5,
-      width: screenWidth*0.9,
+      width: containerWidth,
       marginHorizontal:30,
       marginBottom: 20,
       paddingVertical: 20,
@@ -158,13 +130,13 @@ const styles = StyleSheet.create({
    },
    subcard: {
       backgroundColor: 'white',
-      width: screenWidth*0.9,
+      width: containerWidth,
       alignItems: 'center',
       justifyContent: 'center',
    },
    paddingCard: {
       backgroundColor: 'white',
-      width: screenWidth*0.9,
+      width: containerWidth,
       marginHorizontal:30,
       marginBottom: 20,
       paddingVertical: 20,

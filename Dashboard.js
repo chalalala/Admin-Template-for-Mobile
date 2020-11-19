@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View, ScrollView, Dimensions } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import GradientBackground from './helpers/GradientBackground';
-import { colors } from './helpers/colors';
+import { colors, chartConfig, containerWidth } from './helpers/config';
 
 import { DataTable, Searchbar } from 'react-native-paper';
 import { list_user } from './data/list_user';
@@ -17,18 +17,6 @@ import {
 } from "react-native-chart-kit";
 
 const Stack = createStackNavigator();
-const screenWidth = Dimensions.get("window").width;
-
-const chartConfig = {
-   backgroundGradientFrom: "#fff",
-   backgroundGradientTo: "#fff",
-   fillShadowGradient: 'rgba(22, 165, 150)',
-   fillShadowGradientOpacity: 0.3,
-   color: (opacity = 1) => `rgba(50, 50, 50, ${opacity})`,
-   strokeWidth: 2,
-   barPercentage: 0.5,
-   useShadowColorFromDataset: false
- };
 
 const Card = (props) => {
    return(
@@ -124,7 +112,7 @@ const DashboardScreen = ({navigation}) => {
          <View style={styles.container}>
             <View>
                {/* <ScrollView horizontal>
-                  <View style={{width:screenWidth*0.9*gs.length, flexDirection:'row'}}>
+                  <View style={{width:containerWidth*gs.length, flexDirection:'row'}}>
                   {
                      gs.map(item => (
                         <Card label={item.label} value={item.value} key={item.label}/>
@@ -200,7 +188,7 @@ const DashboardScreen = ({navigation}) => {
    )
 }
 
-export default function Dashboard({route}){
+export default function Dashboard(){
    return(
       <Stack.Navigator
          initialRouteName="Dashboard"
@@ -232,7 +220,7 @@ const styles = StyleSheet.create({
    },
    card: {
       backgroundColor: 'white',
-      width: screenWidth*0.9,
+      width: containerWidth,
       marginHorizontal:30,
       marginBottom: 20,
       paddingVertical: 20,
@@ -240,7 +228,7 @@ const styles = StyleSheet.create({
    },
    subcard: {
       backgroundColor: 'white',
-      width: screenWidth*0.9,
+      width: containerWidth,
       alignItems: 'center',
       justifyContent: 'center',
       
@@ -256,7 +244,7 @@ const styles = StyleSheet.create({
    },
    paddingCard: {
       backgroundColor: 'white',
-      width: screenWidth*0.9,
+      width: containerWidth,
       marginHorizontal:30,
       marginBottom: 20,
       paddingVertical: 20,

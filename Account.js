@@ -3,7 +3,7 @@ import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-nativ
 import { createStackNavigator } from '@react-navigation/stack';
 import { useGlobalState} from './helpers/global.js';
 import GradientBackground from './helpers/GradientBackground';
-import { colors } from './helpers/colors';
+import { colors } from './helpers/config';
 import { MaterialIcons } from '@expo/vector-icons'; 
 
 const Stack = createStackNavigator();
@@ -23,7 +23,7 @@ const AccountScreen = () => {
    )
 }
 
-export default function Account({route}){
+export default function Account(){
    return(
       <Stack.Navigator
          initialRouteName="LoginScreen"
