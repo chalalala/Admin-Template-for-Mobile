@@ -2,12 +2,11 @@ import React, { useState } from 'react';
 import { StyleSheet, Dimensions, TextInput, Text, TouchableOpacity, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { GlobalStateProvider, useGlobalState} from './global.js';
+import { GlobalStateProvider, useGlobalState} from './helpers/global.js';
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
-import { LinearGradient } from 'expo-linear-gradient';
-// import { TextInput } from 'react-native-paper';
+import GradientBackground from './helpers/GradientBackground';
 
-import colors from './colors';
+import colors from './helpers/colors';
 import { accounts } from './data/accounts.js';
 
 import Dashboard from './Dashboard';
@@ -46,18 +45,7 @@ const LoginScreen = ({navigation}) => {
 
   return(
      <View style={styles.container}>
-        <LinearGradient
-          // Background Linear Gradient
-          colors={["#19adb1", "#0a6dc3"]}
-          style={{
-            position: 'absolute',
-            left: 0,
-            right: 0,
-            top: 0,
-            height: Dimensions.get("window").height,
-          }}
-          // start={[0, 0]} end={[1, 0]}
-        />
+        <GradientBackground/>
         <View style={styles.inputContainer}>
           <Text style={styles.inputLabel}>User ID</Text>
           <TextInput

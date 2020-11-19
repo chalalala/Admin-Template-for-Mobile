@@ -1,9 +1,8 @@
 import React from 'react';
-import Constants from 'expo-constants';
 import { StyleSheet, Text, TouchableOpacity, View, ScrollView, Dimensions } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { LinearGradient } from 'expo-linear-gradient';
-import colors from './colors';
+import GradientBackground from './helpers/GradientBackground';
+import { colors } from './helpers/colors';
 
 import { DataTable, Searchbar } from 'react-native-paper';
 import { list_user } from './data/list_user';
@@ -72,18 +71,7 @@ const SingleInfo = ({route}) => {
    
    return(
       <ScrollView>
-         <LinearGradient
-          // Background Linear Gradient
-          colors={["#19adb1", "#0a6dc3"]}
-          style={[{
-            position: 'absolute',
-            left: 0,
-            right: 0,
-            top: 0,
-            
-          },StyleSheet.absoluteFill]}
-          // start={[0, 0]} end={[1, 0]}
-         />
+         <GradientBackground/>
          <View style={styles.container}>   
             <Card label='Number of Calls' value={user.calls} style={styles.paddingCard}/>
 
@@ -132,18 +120,7 @@ const DashboardScreen = ({navigation}) => {
 
    return(
       <ScrollView>
-         <LinearGradient
-          // Background Linear Gradient
-          colors={["#19adb1", "#0a6dc3"]}
-          style={[{
-            position: 'absolute',
-            left: 0,
-            right: 0,
-            top: 0,
-            
-          },StyleSheet.absoluteFill]}
-          // start={[0, 0]} end={[1, 0]}
-         />
+         <GradientBackground/>
          <View style={styles.container}>
             <View>
                {/* <ScrollView horizontal>
@@ -166,7 +143,7 @@ const DashboardScreen = ({navigation}) => {
                      <Searchbar
                         placeholder="Enter user ID"
                         style={styles.searchContainer}
-                        inputStyle={{color:colors("BLACK")}}
+                        inputStyle={{color:colors.BLACK}}
                         onChangeText={text => setQuery(text)}
                         onIconPress={filterResult}
                         // keyboardType='number-pad'   
@@ -230,7 +207,7 @@ export default function Dashboard({route}){
          headerMode="screen"
          screenOptions={{
             headerStyle: {
-               backgroundColor: colors("VTGREEN")
+               backgroundColor: colors.VTGREEN
             },
             headerTintColor: 'white',
             headerTitleAlign: 'center'
@@ -266,6 +243,16 @@ const styles = StyleSheet.create({
       width: screenWidth*0.9,
       alignItems: 'center',
       justifyContent: 'center',
+      
+      shadowColor: "#000",
+      shadowOffset: {
+         width: 0,
+         height: 2,
+      },
+      shadowOpacity: 0.25,
+      shadowRadius: 3.84,
+
+      elevation: 5,
    },
    paddingCard: {
       backgroundColor: 'white',
@@ -285,7 +272,7 @@ const styles = StyleSheet.create({
    },
    value: {
       fontSize: 30,
-      color: colors("VTGREEN"),
+      color: colors.VTGREEN,
       // textAlign: 'center',
    },
    searchContainer: {

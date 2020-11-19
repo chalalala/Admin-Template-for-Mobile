@@ -1,10 +1,10 @@
 import React from 'react';
-import Constants from 'expo-constants';
-import { StyleSheet, Text, View, ScrollView, Dimensions } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View, ScrollView, Dimensions } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { LinearGradient } from 'expo-linear-gradient';
-import colors from './colors';
+import GradientBackground from './helpers/GradientBackground';
+import { colors } from './helpers/colors';
 
+import { FontAwesome5 } from '@expo/vector-icons'; 
 import {
    LineChart,
    BarChart,
@@ -30,23 +30,57 @@ const chartConfig = {
    useShadowColorFromDataset: false
  };
 
-const AnalyticsScreen = ({navigator}) => {
+const UserAnalytics = ({navigation}) => {
    return(
       <ScrollView>
-         <LinearGradient
-          // Background Linear Gradient
-          colors={["#19adb1", "#0a6dc3"]}
-          style={[{
-            position: 'absolute',
-            left: 0,
-            right: 0,
-            top: 0,
-            
-          },StyleSheet.absoluteFill]}
-          // start={[0, 0]} end={[1, 0]}
-         />
+         
          <View style={styles.container}>
+            <Text>Hello</Text>
+         </View>
+      </ScrollView>
+   )
+}
+
+const AnalyticsScreen = ({navigation}) => {
+   return(
+      // <ScrollView>
+
+         <View style={styles.container}>
+            {/* <LinearGradient
+            // Background Linear Gradient
+            colors={["#19adb1", "#0a6dc3"]}
+            style={[{
+               position: 'absolute',
+               left: 0,
+               right: 0,
+               top: 0,
+               
+            },StyleSheet.absoluteFill]}
+            // start={[0, 0]} end={[1, 0]}
+            /> */}
+            <GradientBackground/>
+            <TouchableOpacity onPress={() => navigation.navigate("UserAnalytics")}>
+               <View style={[styles.card, styles.subcard]}>
+                  <FontAwesome5 name="user-friends" size={24} color="black" />
+                  <Text>User analytics</Text>
+               </View>
+            </TouchableOpacity>
+
             <View style={[styles.card, styles.subcard]}>
+               <FontAwesome5 name="user-friends" size={24} color="black" />
+               <Text>User analytics</Text>
+            </View>
+            
+            <View style={[styles.card, styles.subcard]}>
+               <FontAwesome5 name="user-friends" size={24} color="black" />
+               <Text>User analytics</Text>
+            </View>
+
+            <View style={[styles.card, styles.subcard]}>
+               <FontAwesome5 name="user-friends" size={24} color="black" />
+               <Text>User analytics</Text>
+            </View>
+            {/* <View style={[styles.card, styles.subcard]}>
                <LineChart
                   data={history_calls}
                   width={screenWidth*0.9}
@@ -66,9 +100,9 @@ const AnalyticsScreen = ({navigator}) => {
                   backgroundColor="transparent"
                   paddingLeft="0"
                />
-            </View>
+            </View> */}
          </View>
-      </ScrollView>
+      // </ScrollView>
    )
 }
 
@@ -78,19 +112,15 @@ export default function Analytics({route}){
          initialRouteName="Analytics"
          headerMode="screen"
          screenOptions={{
-            // headerBackground: () => (
-            //    <LinearGradient
-            //       colors={['#21C99F','#298299']}
-            //    />
-            // ),
             headerStyle: {
-               backgroundColor: colors("VTGREEN")
+               backgroundColor: colors.VTGREEN
             },
             headerTintColor: 'white',
             headerTitleAlign: 'center'
          }}
       >
          <Stack.Screen name="Analytics" component={AnalyticsScreen}/>
+         <Stack.Screen name="UserAnalytics" component={UserAnalytics}/>
       </Stack.Navigator>
    )
 } 
@@ -101,6 +131,7 @@ const styles = StyleSheet.create({
    container: {
       flex: 1,
       alignItems: 'center',
+      justifyContent: 'center',
       paddingTop: 20,
    },
    row: {
@@ -108,11 +139,22 @@ const styles = StyleSheet.create({
    },
    card: {
       backgroundColor: 'white',
+      borderRadius: 5,
       width: screenWidth*0.9,
       marginHorizontal:30,
       marginBottom: 20,
       paddingVertical: 20,
       justifyContent: 'center',
+      
+      shadowColor: "#000",
+      shadowOffset: {
+         width: 0,
+         height: 2,
+      },
+      shadowOpacity: 0.25,
+      shadowRadius: 3.84,
+
+      elevation: 5,
    },
    subcard: {
       backgroundColor: 'white',
@@ -138,7 +180,7 @@ const styles = StyleSheet.create({
    },
    value: {
       fontSize: 30,
-      color: colors("VTGREEN"),
+      color: colors.VTGREEN,
       // textAlign: 'center',
    },
    searchContainer: {
