@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, TouchableOpacity, View, ScrollView, Dimensions } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View, ScrollView } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import GradientBackground from './helpers/GradientBackground';
 import { colors, chartConfig, screenWidth, containerWidth } from './helpers/config';
@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
    },
    card: {
       backgroundColor: 'white',
-      borderRadius: 5,
+      // borderRadius: 5,
       width: containerWidth,
       marginHorizontal:30,
       marginBottom: 20,

@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, TouchableOpacity, View, ScrollView, Dimensions } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View, ScrollView } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import GradientBackground from './helpers/GradientBackground';
 import { colors, chartConfig, containerWidth } from './helpers/config';

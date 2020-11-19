@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Dimensions, TextInput, Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, TextInput, Text, TouchableOpacity, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { GlobalStateProvider, useGlobalState} from './helpers/global.js';
