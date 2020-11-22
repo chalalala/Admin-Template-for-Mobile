@@ -5,6 +5,9 @@ import GradientBackground from './helpers/GradientBackground';
 import { colors, chartConfig, screenWidth, containerWidth } from './helpers/config';
 
 import { FontAwesome5 } from '@expo/vector-icons'; 
+import { FontAwesome } from '@expo/vector-icons'; 
+import { Entypo } from '@expo/vector-icons'; 
+
 import {
    LineChart,
    BarChart,
@@ -18,21 +21,122 @@ import { distribution } from './data/distribution.js';
 
 const Stack = createStackNavigator();
 
-const UserAnalytics = ({navigation}) => {
+const UserAnalytics = () => {
+   const money = {
+      labels: ["1","5","10","15","20","25","30"],
+      datasets: [
+        {
+          data: [489,598,498, 979, 1038, 421, 399],
+          color: (opacity = 1) => `rgb(73, 178, 123, ${opacity})`,
+          strokeWidth: 2
+        },
+        {
+         data: [289,798,198, 879, 1038, 321, 599],
+         color: (opacity = 1) => `rgb(255, 199, 46, ${opacity})`,
+         strokeWidth: 2
+       },
+        {
+         data: [1489,1598,3498, 2979, 1088, 421, 1399],
+         color: (opacity = 1) => `rgb(232, 28, 21, ${opacity})`,
+         strokeWidth: 2
+       }
+      ],
+      legend: ["Recharge", "Loan", "Spent"]
+   };
+
    return(
       <ScrollView>
          <GradientBackground/>
          <View style={styles.container}>
-            <View style={[styles.card, styles.subcard]}>
+            <View style={styles.card}>
+               <Text style={styles.label}>The total calls made</Text>
                <LineChart
                   data={history_calls}
                   width={containerWidth}
                   height={220}
                   chartConfig={chartConfig}
+                  withHorizontalLabels	
                />
             </View>
 
-            <View style={[styles.card, styles.subcard]}>
+            <View style={styles.card}>
+               <Text style={styles.label}>Data used</Text>
+               <BarChart
+               data={history_calls}
+               width={screenWidth*0.8}
+               height={220}
+               chartConfig={chartConfig}
+               verticalLabelRotation={30}
+               />
+            </View>
+
+            <View style={styles.card}>
+               <Text style={styles.label}>Total amount spent, deposited, borrowed</Text>
+               <LineChart
+                  data={money}
+                  width={screenWidth*0.8}
+                  height={200}
+                  chartConfig={chartConfig}
+               />
+            </View>
+         </View>
+      </ScrollView>
+   )
+}
+
+const LoanAnalytics = () => {
+   const paymentMethod = {
+      labels: ["1","5","10","15","20","25","30"],
+      datasets: [
+        {
+          data: [489,598,498, 979, 1038, 421, 399],
+          color: (opacity = 1) => `rgb(73, 178, 123, ${opacity})`,
+          strokeWidth: 2
+        },
+        {
+         data: [289,798,198, 879, 1038, 321, 599],
+         color: (opacity = 1) => `rgb(255, 199, 46, ${opacity})`,
+         strokeWidth: 2
+       },
+      ],
+      legend: ["Card", "Virtual"]
+   };
+
+   return(
+      <ScrollView>
+         <GradientBackground/>
+         <View style={styles.container}>
+            <View style={styles.card}>
+               <Text style={styles.label}>Total amount spent, deposited, borrowed</Text>
+               <LineChart
+                  data={paymentMethod}
+                  width={screenWidth*0.8}
+                  height={200}
+                  chartConfig={chartConfig}
+               />
+            </View>
+         </View>
+      </ScrollView>
+   )
+}
+
+const RechargeAnalytics = () => {
+   return(
+      <ScrollView>
+         <GradientBackground/>
+         <View style={styles.container}>
+            <Text>Hello</Text>
+         </View>
+      </ScrollView>
+   )
+}
+
+const RegionAnalytics = () => {
+   return(
+      <ScrollView>
+         <GradientBackground/>
+         <View style={styles.container}>
+            <View style={styles.card}>
                <Text style={styles.label}>Distribution of users</Text>
                <PieChart
                   data={distribution}
@@ -42,6 +146,28 @@ const UserAnalytics = ({navigation}) => {
                   accessor="percentage"
                   backgroundColor="transparent"
                   paddingLeft="0"
+               />
+            </View>
+
+            <View style={styles.card}>
+               <Text style={styles.label}>Total call times by Region</Text>
+               <BarChart
+               data={history_calls}
+               width={screenWidth*0.8}
+               height={220}
+               chartConfig={chartConfig}
+               verticalLabelRotation={30}
+               />
+            </View>
+
+            <View style={styles.card}>
+               <Text style={styles.label}>Total data used by Region</Text>
+               <BarChart
+               data={history_calls}
+               width={screenWidth*0.8}
+               height={220}
+               chartConfig={chartConfig}
+               verticalLabelRotation={30}
                />
             </View>
          </View>
@@ -54,26 +180,32 @@ const AnalyticsScreen = ({navigation}) => {
       <View style={styles.container}>
          <GradientBackground/>
          <TouchableOpacity onPress={() => navigation.navigate("UserAnalytics")}>
-            <View style={[styles.card, styles.subcard]}>
+            <View style={styles.card}>
                <FontAwesome5 name="user-friends" size={24} color="black" />
-               <Text>User analytics</Text>
+               <Text>User Analytics</Text>
             </View>
          </TouchableOpacity>
 
-         <View style={[styles.card, styles.subcard]}>
-            <FontAwesome5 name="user-friends" size={24} color="black" />
-            <Text>User analytics</Text>
-         </View>
+         <TouchableOpacity onPress={() => navigation.navigate("LoanAnalytics")}>
+            <View style={styles.card}>
+               <FontAwesome name="bank" size={24} color="black" />
+               <Text>Loan Analytics</Text>
+            </View>
+         </TouchableOpacity>
          
-         <View style={[styles.card, styles.subcard]}>
-            <FontAwesome5 name="user-friends" size={24} color="black" />
-            <Text>User analytics</Text>
-         </View>
+         <TouchableOpacity onPress={() => navigation.navigate("RechargeAnalytics")}>
+            <View style={styles.card}>
+               <FontAwesome5 name="money-bill-alt" size={24} color="black" />
+               <Text>Recharge Analytics</Text>
+            </View>
+         </TouchableOpacity>
 
-         <View style={[styles.card, styles.subcard]}>
-            <FontAwesome5 name="user-friends" size={24} color="black" />
-            <Text>User analytics</Text>
-         </View>
+         <TouchableOpacity onPress={() => navigation.navigate("RegionAnalytics")}>
+            <View style={styles.card}>
+               <Entypo name="location-pin" size={24} color="black" />
+               <Text>Region Analytics</Text>
+            </View>
+         </TouchableOpacity>
       </View>
    )
 }
@@ -92,7 +224,10 @@ export default function Analytics(){
          }}
       >
          <Stack.Screen name="Analytics" component={AnalyticsScreen}/>
-         <Stack.Screen name="UserAnalytics" component={UserAnalytics}/>
+         <Stack.Screen name="UserAnalytics" component={UserAnalytics} options={{title:'User Analytics'}}/>
+         <Stack.Screen name="LoanAnalytics" component={LoanAnalytics} options={{title:'Loan Analytics'}}/>
+         <Stack.Screen name="RechargeAnalytics" component={RechargeAnalytics} options={{title:'Recharge Analytics'}}/>
+         <Stack.Screen name="RegionAnalytics" component={RegionAnalytics} options={{title:'Region Analytics'}}/>
       </Stack.Navigator>
    )
 } 
@@ -117,6 +252,7 @@ const styles = StyleSheet.create({
       marginBottom: 20,
       paddingVertical: 20,
       justifyContent: 'center',
+      alignItems: 'center',
       
       shadowColor: "#000",
       shadowOffset: {
@@ -149,6 +285,7 @@ const styles = StyleSheet.create({
       fontWeight: '600',
       marginBottom: 10,
       marginRight: 5,
+      textAlign: 'center'
    },
    value: {
       fontSize: 30,
@@ -161,5 +298,3 @@ const styles = StyleSheet.create({
       borderBottomColor: 'lightgrey'
    }
 });
-
- 

@@ -20,6 +20,7 @@
     "react-gesture-handler": "^0.0.4",
     "react-native": "https://github.com/expo/react-native/archive/sdk-39.0.4.tar.gz",
     "react-native-chart-kit": "^6.6.1",
+    "react-native-elements": "^3.0.0-alpha.1",
     "react-native-gesture-handler": "~1.7.0",
     "react-native-linear-gradient": "^2.5.6",
     "react-native-paper": "^4.3.1",

@@ -1,17 +1,20 @@
 export const list_user = [
    {
       id: "001",
+      city: "Hanoi",
       calls: "976",
       success_calls: "905",
       data_used: "2,030,340",
-      call_lengths: [489,598,498],
+      call_lengths: [489,598,498, 979, 1038, 421, 399],
       spent: "48,994,123",
       recharge: "484849",
       loan: "489482",
+      score: "98",
       label: "Good"
    },
    {
       id: "002",
+      city: "Hanoi",
       calls: "976",
       success_calls: "905",
       data_used: "2,030,340",
@@ -19,10 +22,12 @@ export const list_user = [
       spent: "48,994,123",
       recharge: "484849",
       loan: "489482",
+      score: "98",
       label: "Good"
    },
    {
       id: "003",
+      city: "Hanoi",
       calls: "976",
       success_calls: "905",
       data_used: "2,030,340",
@@ -30,10 +35,12 @@ export const list_user = [
       spent: "48,994,123",
       recharge: "484849",
       loan: "489482",
+      score: "98",
       label: "Good"
    },
    {
       id: "004",
+      city: "Hanoi",
       calls: "976",
       success_calls: "905",
       data_used: "2,030,340",
@@ -41,10 +48,12 @@ export const list_user = [
       spent: "48,994,123",
       recharge: "484849",
       loan: "489482",
+      score: "98",
       label: "Good"
    },
    {
       id: "005",
+      city: "HCM City",
       calls: "976",
       success_calls: "905",
       data_used: "2,030,340",
@@ -52,21 +61,25 @@ export const list_user = [
       spent: "48,994,123",
       recharge: "484849",
       loan: "489482",
+      score: "98",
       label: "Good"
    },
    {
       id: "006",
+      city: "HCM City",
       calls: "976",
       success_calls: "905",
       data_used: "2,030,340",
-      call_lengths: [489,180,498],
+      call_lengths: [489,598,498, 979, 1038, 421, 399],
       spent: "48,994,123",
       recharge: "484849",
       loan: "489482",
+      score: "98",
       label: "Good"
    },
    {
       id: "007",
+      city: "HCM City",
       calls: "976",
       success_calls: "905",
       data_used: "2,030,340",
@@ -74,6 +87,7 @@ export const list_user = [
       spent: "48,994,123",
       recharge: "10,000",
       loan: "489482",
+      score: "98",
       label: "Bad"
    },
 ]
