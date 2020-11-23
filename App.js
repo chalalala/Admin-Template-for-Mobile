@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, TextInput, Text, TouchableOpacity, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -26,6 +26,35 @@ const LoginScreen = () => {
   const [account, setAccount] = useState("");
   const [pwd, setPwd] = useState("");
   const [message, setMsg] = useState("");
+
+  const fetchUserData = () => {
+    axios.get('http://localhost:5000/getUserDetail')
+    .then(response => {
+        console.log(response.data);
+    })
+    .catch(function (error) {
+        console.log(error);
+    })
+  }
+
+  useEffect(() => {
+    fetchUserData();
+  },[]);
+
+  // const getUserData = async () => {
+  //   try{
+  //     const response = await fetch(`http://localhost:5000/`);
+  //     const data = await response.data;
+  //     console.log(data);
+  //   }
+  //   catch(error){
+  //     console.log("Failed.");
+  //   };
+  // }
+
+  // useEffect(() => {
+  //   getUserData();
+  // },[]);
 
   const login = () => {
     let _acc = accounts.find(item => item.uid === account);

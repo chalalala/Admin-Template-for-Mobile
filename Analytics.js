@@ -22,28 +22,6 @@ import { distribution } from './data/distribution.js';
 const Stack = createStackNavigator();
 
 const UserAnalytics = () => {
-   const money = {
-      labels: ["1","5","10","15","20","25","30"],
-      datasets: [
-        {
-          data: [489,598,498, 979, 1038, 421, 399],
-          color: (opacity = 1) => `rgb(73, 178, 123, ${opacity})`,
-          strokeWidth: 2
-        },
-        {
-         data: [289,798,198, 879, 1038, 321, 599],
-         color: (opacity = 1) => `rgb(255, 199, 46, ${opacity})`,
-         strokeWidth: 2
-       },
-        {
-         data: [1489,1598,3498, 2979, 1088, 421, 1399],
-         color: (opacity = 1) => `rgb(232, 28, 21, ${opacity})`,
-         strokeWidth: 2
-       }
-      ],
-      legend: ["Recharge", "Loan", "Spent"]
-   };
-
    return(
       <ScrollView>
          <GradientBackground/>
@@ -67,16 +45,6 @@ const UserAnalytics = () => {
                height={220}
                chartConfig={chartConfig}
                verticalLabelRotation={30}
-               />
-            </View>
-
-            <View style={styles.card}>
-               <Text style={styles.label}>Total amount spent, deposited, borrowed</Text>
-               <LineChart
-                  data={money}
-                  width={screenWidth*0.8}
-                  height={200}
-                  chartConfig={chartConfig}
                />
             </View>
          </View>
@@ -121,11 +89,40 @@ const LoanAnalytics = () => {
 }
 
 const RechargeAnalytics = () => {
+   const money = {
+      labels: ["1","5","10","15","20","25","30"],
+      datasets: [
+        {
+          data: [489,598,498, 979, 1038, 421, 399],
+          color: (opacity = 1) => `rgb(73, 178, 123, ${opacity})`,
+          strokeWidth: 2
+        },
+        {
+         data: [289,798,198, 879, 1038, 321, 599],
+         color: (opacity = 1) => `rgb(255, 199, 46, ${opacity})`,
+         strokeWidth: 2
+       },
+        {
+         data: [1489,1598,3498, 2979, 1088, 421, 1399],
+         color: (opacity = 1) => `rgb(232, 28, 21, ${opacity})`,
+         strokeWidth: 2
+       }
+      ],
+      legend: ["Recharge", "Loan", "Spent"]
+   };
+   
    return(
       <ScrollView>
          <GradientBackground/>
-         <View style={styles.container}>
-            <Text>Hello</Text>
+      
+         <View style={styles.card}>
+            <Text style={styles.label}>Total amount spent, deposited, borrowed</Text>
+            <LineChart
+               data={money}
+               width={screenWidth*0.8}
+               height={200}
+               chartConfig={chartConfig}
+            />
          </View>
       </ScrollView>
    )
