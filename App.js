@@ -5,7 +5,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { GlobalStateProvider, useGlobalState} from './helpers/global.js';
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
 import GradientBackground from './helpers/GradientBackground';
-
+import axios from 'axios';
 import { colors } from './helpers/config';
 import { accounts } from './data/accounts.js';
 
@@ -28,7 +28,7 @@ const LoginScreen = () => {
   const [message, setMsg] = useState("");
 
   const fetchUserData = () => {
-    axios.get('http://localhost:5000/getUserDetail')
+    axios.get('http://192.168.1.3:5000/')
     .then(response => {
         console.log(response.data);
     })

@@ -8,7 +8,6 @@ const app = express();
 
 var userService = require("./domain/services/userService");
 var dataService = require("./domain/services/dataService");
-var user = require("./domain/models/user");
 
 app.use(cors());
 
@@ -23,9 +22,8 @@ app.get("/", (req, res) => {
   });
 });
 
-// 
 app.get("/getUserDetail", (req, res) => {
-  // let user = require("./domain/models/user");
+  let user = require("./domain/models/user");
   user.find({}, function(err,result){
     if (err){
       res.send(err);
@@ -35,7 +33,6 @@ app.get("/getUserDetail", (req, res) => {
     }
   })
 });
-//
 
 app.post("/api/user/signup", async (req, res) => {
   const { name, email, password } = req.body;
@@ -55,6 +52,77 @@ app.post("/api/user/signin", async (req, res) => {
   try {
     const fecthedUser = await userService.signIn(email, password);
     res.json(fecthedUser);
+  } catch (err) {
+    res.status(400);
+    res.json({
+      err: err.message,
+    });
+  }
+});
+
+app.post("/api/data/getData", async (req, res) => {
+  const { id } = req.body;
+  try {
+    const data = await dataService.getData(id);
+    res.json(data);
+  } catch (err) {
+    res.status(400);
+    res.json({
+      err: err.message,
+    });
+  }
+});
+
+app.post("/api/data/createData", async (req, res) => {
+  const { id,
+    label,
+    col_19,
+    age,
+    gender,
+    city,
+    district,
+    numberOfCall,
+    numberOfContactAll,
+    numberOfAppearance,
+    numberBeCalled,
+    uploadDataMean,
+    uploadDataMin,
+    uploadDataMax,
+    downloadDataMean,
+    downloadDataMin,
+    downloadDataMax,
+    timecall_mean,
+    timecall_max,
+    timecall_min,
+    numberOfRecharge,
+    numberOfLoan,
+    numberOfRepay } = req.body;
+    console.log(id)
+  try {
+    const newData = await dataService.createData(id,
+      label,
+      col_19,
+      age,
+      gender,
+      city,
+      district,
+      numberOfCall,
+      numberOfContactAll,
+      numberOfAppearance,
+      numberBeCalled,
+      uploadDataMean,
+      uploadDataMin,
+      uploadDataMax,
+      downloadDataMean,
+      downloadDataMin,
+      downloadDataMax,
+      timecall_mean,
+      timecall_max,
+      timecall_min,
+      numberOfRecharge,
+      numberOfLoan,
+      numberOfRepay,);
+    res.json(newData);
   } catch (err) {
     res.status(400);
     res.json({
