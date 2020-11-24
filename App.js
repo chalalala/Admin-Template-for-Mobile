@@ -1,16 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import { StyleSheet, TextInput, Text, TouchableOpacity, View } from 'react-native';
+import React from 'react';
+import { StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { GlobalStateProvider, useGlobalState} from './helpers/global.js';
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
 import GradientBackground from './helpers/GradientBackground';
-import axios from 'axios';
 import { colors } from './helpers/config';
 
-import Dashboard from './Dashboard';
-import Analytics from './Analytics';
-import Account from './Account';
+import Dashboard from './view/Dashboard';
+import Analytics from './view/Analytics';
+import Account, { LoginScreen } from './view/Account';
 
 const Tab = createBottomTabNavigator();
 
@@ -19,75 +18,6 @@ const routeIcons = {
   Analytics: "google-analytics",
   Account: "account"
 };
-
-const LoginScreen = () => {
-  const [state, dispatch] = useGlobalState();
-  const [userList, setList] = useState([]);
-  const [email, setEmail] = useState("");
-  const [pwd, setPwd] = useState("");
-  const [message, setMsg] = useState("");
-
-  const fetchUserAccount = () => {
-    axios.get('http://192.168.1.3:5000/getUserAccount')
-    .then(response => {
-        console.log(response.data);
-        setList(response.data);
-    })
-    .catch(function (error) {
-        console.log(error);
-    })
-  }
-
-  useEffect(() => {
-    fetchUserAccount();
-  },[]);
-
-  const login = () => {
-    let _acc = userList.find(item => item.email === email);
-    if (_acc){
-      if (_acc.password === pwd){
-        dispatch({ user: _acc.name });
-        setMsg("");
-      }
-      else{
-        setMsg("Password does not correct.")
-      }
-    }
-    else{
-      setMsg("User ID does not exist.");
-    }
-  };
-
-  return(
-     <View style={styles.container}>
-        <GradientBackground/>
-        <View style={styles.inputContainer}>
-          <Text style={styles.inputLabel}>Email</Text>
-          <TextInput
-            selectionColor={colors.VTBLUE}
-            style={styles.textContainer}
-            onChangeText={text => setEmail(text)}
-          />
-
-          <Text style={styles.inputLabel}>Password</Text>
-          <TextInput
-            style={styles.textContainer}
-            secureTextEntry={true}
-            textContentType="password"
-            onChangeText={text => setPwd(text)}
-          />
-        
-          <TouchableOpacity style={styles.loginButtonContainer}
-            onPress={login}
-          >
-            <Text style={styles.loginButtonText}>Sign In</Text>
-          </TouchableOpacity>
-
-          <Text style={styles.message}>{message}</Text>
-        </View>
-     </View>
-  )
-}
 
 const InAppScreen = () => {
   return(
@@ -139,58 +69,5 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  row: {
-     flexDirection: 'row',
-  },
-  title: {
-     color: '#3aa2bd',
-     fontSize: 30,
-     fontWeight: 'bold',
-     marginBottom: 50,
-  },
-  avatar: {
-     color: colors.GREYCOLOR,
-     marginBottom: 10,
-  },
-  inputContainer: {
-     width: '70%',
-     alignItems: 'center',
-  },
-  inputLabel: {
-     width:100,
-     fontSize: 16,
-     fontWeight: 'bold',
-     marginTop: 10,
-     color: 'white',
-     opacity: 0.8,
-     alignSelf: 'flex-start',
-  },
-  textContainer: {
-     borderBottomWidth: 0.5,
-     borderColor: 'white',
-     backgroundColor: 'transparent',
-     color: 'white',
-     width: '100%',
-     fontSize: 20,
-     paddingVertical: 5,
-  },
-  loginButtonContainer: {
-     backgroundColor: 'white',
-     borderRadius: 5,
-     width: 250,
-     height: 50,
-     justifyContent: 'center',
-     alignItems: 'center',
-     marginTop: 40,
-  },
-  loginButtonText: {
-     color: colors.VTBLUE,
-     fontSize: 18,
-     fontWeight: '700',
-  },
-  message: {
-    color: 'red',
-    marginTop: 10,
-  }
 });
 

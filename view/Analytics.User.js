@@ -1,12 +1,8 @@
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View, ScrollView } from 'react-native';
-import { createStackNavigator } from '@react-navigation/stack';
+import { colors, chartConfig, screenWidth, containerWidth } from './helpers/config';
 import GradientBackground from './helpers/GradientBackground';
-import { colors, chartConfig, containerWidth, screenWidth } from './helpers/config';
-
 import { DataTable, Searchbar } from 'react-native-paper';
-import { list_user } from './data/list_user';
-import { general_statistics as gs} from './data/general_statistics';
 import {
    LineChart,
    BarChart,
@@ -15,19 +11,10 @@ import {
    ContributionGraph,
    StackedBarChart
 } from "react-native-chart-kit";
+import { history_calls } from './data/history_calls';
+import { list_user } from './data/list_user';
 
-const Stack = createStackNavigator();
-
-const Card = (props) => {
-   return(
-      <View style={props.style ? props.style : styles.subcard}>
-         <Text style={styles.label}>{props.label}</Text>
-         <Text style={styles.value}>{props.value}</Text>
-      </View>
-   )
-}
-
-const SingleInfo = ({route}) => {
+export const SingleInfo = ({route}) => {
    let user = route.params;
    const data = [{
       name: "Success",
@@ -123,13 +110,7 @@ const SingleInfo = ({route}) => {
    )
 }
 
-const DashboardScreen = ({navigation}) => {
-   const [query, setQuery] = React.useState("");
-   const [page, setPage] = React.useState(0);
-   const [display, setDisplay] = React.useState(list_user);
-   const itemsPerPage = 5;
-   const numberOfPages = Math.ceil(list_user.length / itemsPerPage);
-   
+export const UserAnalytics = () => {
    const filterResult = () => {
       if (!query){
          setDisplay(list_user);
@@ -139,21 +120,38 @@ const DashboardScreen = ({navigation}) => {
       }
    }
 
+   const [query, setQuery] = React.useState("");
+   const [page, setPage] = React.useState(0);
+   const [display, setDisplay] = React.useState(list_user);
+   const itemsPerPage = 5;
+   const numberOfPages = Math.ceil(list_user.length / itemsPerPage);
+
    return(
       <ScrollView>
          <GradientBackground/>
          <View style={styles.container}>
-            <View>
-               {/* <ScrollView horizontal>
-                  <View style={{width:containerWidth*gs.length, flexDirection:'row'}}>
-                     <Card label='Active user' value='300/400' style={styles.paddingCard}/>
-                     <Card label='Successful calls' value='946,348' style={styles.paddingCard}/>
-                  </View>
-               </ScrollView> */}
-               <Card label='Active user' value='300/400' style={styles.paddingCard}/>
-               <Card label='Successful calls' value='946,348' style={styles.paddingCard}/>
+            <View style={styles.card}>
+               <Text style={styles.label}>The total calls made</Text>
+               <LineChart
+                  data={history_calls}
+                  width={containerWidth}
+                  height={220}
+                  chartConfig={chartConfig}
+                  withHorizontalLabels	
+               />
             </View>
-            
+
+            <View style={styles.card}>
+               <Text style={styles.label}>Data used</Text>
+               <BarChart
+               data={history_calls}
+               width={screenWidth*0.8}
+               height={220}
+               chartConfig={chartConfig}
+               verticalLabelRotation={30}
+               />
+            </View>
+
             <View style={styles.paddingCard}>
                <ScrollView horizontal>
                   <DataTable style={{width:900}}>
@@ -221,49 +219,25 @@ const DashboardScreen = ({navigation}) => {
    )
 }
 
-export default function Dashboard(){
-   return(
-      <Stack.Navigator
-         initialRouteName="Dashboard"
-         headerMode="screen"
-         screenOptions={{
-            headerStyle: {
-               backgroundColor: colors.VTGREEN
-            },
-            headerTintColor: 'white',
-            headerTitleAlign: 'center'
-         }}
-      >
-         <Stack.Screen name="Dashboard" component={DashboardScreen}/>
-         <Stack.Screen name="SingleInfo" component={SingleInfo} options={{title:'Details'}}/>
-      </Stack.Navigator>
-   )
-} 
-
-const removeSpace = text => (text.replace(/\s/g, ''));
-
 const styles = StyleSheet.create({
    container: {
-     flex: 1,
-     alignItems: 'center',
-     paddingTop: 20,
+      flex: 1,
+      alignItems: 'center',
+      justifyContent: 'center',
+      paddingTop: 20,
    },
    row: {
       flexDirection: 'row',
    },
    card: {
       backgroundColor: 'white',
+      // borderRadius: 5,
       width: containerWidth,
       marginHorizontal:30,
       marginBottom: 20,
       paddingVertical: 20,
       justifyContent: 'center',
-   },
-   subcard: {
-      backgroundColor: 'white',
-      width: containerWidth,
       alignItems: 'center',
-      justifyContent: 'center',
       
       shadowColor: "#000",
       shadowOffset: {
@@ -274,6 +248,12 @@ const styles = StyleSheet.create({
       shadowRadius: 3.84,
 
       elevation: 5,
+   },
+   subcard: {
+      backgroundColor: 'white',
+      width: containerWidth,
+      alignItems: 'center',
+      justifyContent: 'center',
    },
    paddingCard: {
       backgroundColor: 'white',
@@ -290,6 +270,7 @@ const styles = StyleSheet.create({
       fontWeight: '600',
       marginBottom: 10,
       marginRight: 5,
+      textAlign: 'center'
    },
    value: {
       fontSize: 30,
@@ -300,6 +281,5 @@ const styles = StyleSheet.create({
       elevation: 0,
       borderBottomWidth: 1,
       borderBottomColor: 'lightgrey'
-   },
+   }
 });
- 
