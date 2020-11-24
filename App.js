@@ -7,7 +7,6 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import GradientBackground from './helpers/GradientBackground';
 import axios from 'axios';
 import { colors } from './helpers/config';
-import { accounts } from './data/accounts.js';
 
 import Dashboard from './Dashboard';
 import Analytics from './Analytics';
@@ -23,14 +22,16 @@ const routeIcons = {
 
 const LoginScreen = () => {
   const [state, dispatch] = useGlobalState();
-  const [account, setAccount] = useState("");
+  const [userList, setList] = useState([]);
+  const [email, setEmail] = useState("");
   const [pwd, setPwd] = useState("");
   const [message, setMsg] = useState("");
 
-  const fetchUserData = () => {
-    axios.get('http://192.168.1.3:5000/')
+  const fetchUserAccount = () => {
+    axios.get('http://192.168.1.3:5000/getUserAccount')
     .then(response => {
         console.log(response.data);
+        setList(response.data);
     })
     .catch(function (error) {
         console.log(error);
@@ -38,26 +39,11 @@ const LoginScreen = () => {
   }
 
   useEffect(() => {
-    fetchUserData();
+    fetchUserAccount();
   },[]);
 
-  // const getUserData = async () => {
-  //   try{
-  //     const response = await fetch(`http://localhost:5000/`);
-  //     const data = await response.data;
-  //     console.log(data);
-  //   }
-  //   catch(error){
-  //     console.log("Failed.");
-  //   };
-  // }
-
-  // useEffect(() => {
-  //   getUserData();
-  // },[]);
-
   const login = () => {
-    let _acc = accounts.find(item => item.uid === account);
+    let _acc = userList.find(item => item.email === email);
     if (_acc){
       if (_acc.password === pwd){
         dispatch({ user: _acc.name });
@@ -76,13 +62,11 @@ const LoginScreen = () => {
      <View style={styles.container}>
         <GradientBackground/>
         <View style={styles.inputContainer}>
-          <Text style={styles.inputLabel}>User ID</Text>
+          <Text style={styles.inputLabel}>Email</Text>
           <TextInput
-            // label='User ID'
-            // mode='outlined'
             selectionColor={colors.VTBLUE}
             style={styles.textContainer}
-            onChangeText={text => setAccount(text)}
+            onChangeText={text => setEmail(text)}
           />
 
           <Text style={styles.inputLabel}>Password</Text>

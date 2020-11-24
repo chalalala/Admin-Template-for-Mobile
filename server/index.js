@@ -22,7 +22,7 @@ app.get("/", (req, res) => {
   });
 });
 
-app.get("/getUserDetail", (req, res) => {
+app.get("/getUserAccount", (req, res) => {
   let user = require("./domain/models/user");
   user.find({}, function(err,result){
     if (err){
