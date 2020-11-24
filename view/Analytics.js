@@ -66,7 +66,6 @@ export default function Analytics(){
       >
          <Stack.Screen name="Analytics" component={AnalyticsScreen}/>
          <Stack.Screen name="UserAnalytics" component={UserAnalytics} options={{title:'User Analytics'}}/>
-         <Stack.Screen name="SingleInfo" component={SingleInfo} options={{title:'Details'}}/>
          <Stack.Screen name="LoanAnalytics" component={LoanAnalytics} options={{title:'Loan Analytics'}}/>
          <Stack.Screen name="RechargeAnalytics" component={RechargeAnalytics} options={{title:'Recharge Analytics'}}/>
          <Stack.Screen name="RegionAnalytics" component={RegionAnalytics} options={{title:'Region Analytics'}}/>

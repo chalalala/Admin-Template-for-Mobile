@@ -86,7 +86,7 @@ const AccountScreen = () => {
          <GradientBackground/>
          <MaterialIcons name="account-circle" size={150} color="black" style={styles.avatar}/>
          <Text style={styles.title}>{state.user}</Text>
-         <TouchableOpacity onPress={() => dispatch({ user: "" })}>
+         <TouchableOpacity onPress={() => dispatch({ user: null })}>
             <Text style={styles.logoutText}>Logout</Text>
          </TouchableOpacity>
       </View>

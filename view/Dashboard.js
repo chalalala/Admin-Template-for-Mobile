@@ -16,6 +16,15 @@ import {
 
 const Stack = createStackNavigator();
 
+const Card = (props) => {
+   return(
+      <View style={props.style ? props.style : styles.subcard}>
+         <Text style={styles.label}>{props.label}</Text>
+         <Text style={styles.value}>{props.value}</Text>
+      </View>
+   )
+}
+
 const DashboardScreen = ({navigation}) => {
    const money = {
       labels: ["1","5","10","15","20","25","30"],
