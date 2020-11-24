@@ -18,22 +18,23 @@ export const RechargeAnalytics = () => {
       labels: ["1","5","10","15","20","25","30"],
       datasets: [
         {
-          data: [489,598,498, 979, 1038, 421, 399],
+          data: [1627423075.0, 1872843089.0, 1662232956.0, 1650075746.0, 1991013836.0, 2590371200.0
+          ],
           color: (opacity = 1) => `rgb(73, 178, 123, ${opacity})`,
           strokeWidth: 2
         },
         {
-         data: [289,798,198, 879, 1038, 321, 599],
+         data: [ -1519900000000.0, -1389200000000.0, -1433600000000.0, -1413800000000.0, -1725500000000.0, -1927700000000.0],
          color: (opacity = 1) => `rgb(255, 199, 46, ${opacity})`,
          strokeWidth: 2
        },
-        {
-         data: [1489,1598,3498, 2979, 1088, 421, 1399],
-         color: (opacity = 1) => `rgb(232, 28, 21, ${opacity})`,
-         strokeWidth: 2
-       }
+      //   {
+      //    data: [1489,1598,3498, 2979, 1088, 421, 1399],
+      //    color: (opacity = 1) => `rgb(232, 28, 21, ${opacity})`,
+      //    strokeWidth: 2
+      //  }
       ],
-      legend: ["Recharge", "Loan", "Spent"]
+      legend: ["Recharge", "Loan"]
    };
 
    const filterResult = () => {
