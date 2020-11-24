@@ -30,7 +30,7 @@ export const RegionAnalytics = () => {
          <GradientBackground/>
          <View style={styles.container}>
             <View style={styles.card}>
-               <Text style={styles.label}>Distribution of users</Text>
+               <Text style={styles.label}>Rate of users per region</Text>
                <PieChart
                   data={distribution}
                   width={screenWidth*0.8}
@@ -50,27 +50,6 @@ export const RegionAnalytics = () => {
                height={220}
                chartConfig={chartConfig}
                verticalLabelRotation={30}
-               />
-            </View>
-
-            <View style={styles.card}>
-               <Text style={styles.label}>Total data used by Region</Text>
-               <BarChart
-               data={history_calls}
-               width={screenWidth*0.8}
-               height={220}
-               chartConfig={chartConfig}
-               verticalLabelRotation={30}
-               />
-            </View>
-
-            <View style={styles.card}>
-               <Text style={styles.label}>Total loan and recharge by region</Text>
-               <StackedBarChart
-               data={data}
-               width={screenWidth*0.8}
-               height={220}
-               chartConfig={chartConfig}
                />
             </View>
          </View>
