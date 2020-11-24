@@ -11,20 +11,10 @@ import {
    ContributionGraph,
    StackedBarChart
 } from "react-native-chart-kit";
-import { distribution } from '../data/distribution.js';
+import { rateUser } from '../data/rateUser.js';
 import { history_calls } from '../data/history_calls';
 
 export const RegionAnalytics = () => {
-   const data = {
-      labels: ["Test1", "Test2"],
-      legend: ["L1", "L2"],
-      data: [
-        [60, 60],
-        [30, 30]
-      ],
-      barColors: ["#dfe4ea", "#ced6e0", "#a4b0be"]
-    };
-
    return(
       <ScrollView>
          <GradientBackground/>
@@ -32,7 +22,7 @@ export const RegionAnalytics = () => {
             <View style={styles.card}>
                <Text style={styles.label}>Rate of users per region</Text>
                <PieChart
-                  data={distribution}
+                  data={rateUser}
                   width={screenWidth*0.8}
                   height={170}
                   chartConfig={chartConfig}
