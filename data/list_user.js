@@ -1,6 +1,7 @@
 export const list_user = [
    {
       id: "001",
+      phone: "048994984",
       city: "Hanoi",
       calls: "976",
       success_calls: "905",
@@ -14,6 +15,7 @@ export const list_user = [
    },
    {
       id: "002",
+      phone: "489494894",
       city: "Hanoi",
       calls: "976",
       success_calls: "905",
@@ -27,6 +29,7 @@ export const list_user = [
    },
    {
       id: "003",
+      phone: "498489489",
       city: "Hanoi",
       calls: "976",
       success_calls: "905",
@@ -40,6 +43,7 @@ export const list_user = [
    },
    {
       id: "004",
+      phone: "498489489",
       city: "Hanoi",
       calls: "976",
       success_calls: "905",
@@ -53,6 +57,7 @@ export const list_user = [
    },
    {
       id: "005",
+      phone: "498489489",
       city: "HCM City",
       calls: "976",
       success_calls: "905",
@@ -66,6 +71,7 @@ export const list_user = [
    },
    {
       id: "006",
+      phone: "498489489",
       city: "HCM City",
       calls: "976",
       success_calls: "905",
@@ -79,6 +85,7 @@ export const list_user = [
    },
    {
       id: "007",
+      phone: "498489489",
       city: "HCM City",
       calls: "976",
       success_calls: "905",

@@ -1,7 +1,8 @@
 import React from 'react';
-import { StyleSheet, Text, View, ScrollView } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View, ScrollView } from 'react-native';
 import { colors, chartConfig, screenWidth, containerWidth } from '../helpers/config';
 import GradientBackground from '../helpers/GradientBackground';
+import { DataTable, Searchbar } from 'react-native-paper';
 import {
    LineChart,
    BarChart,
@@ -10,6 +11,7 @@ import {
    ContributionGraph,
    StackedBarChart
 } from "react-native-chart-kit";
+import { list_user } from '../data/list_user';
 
 export const RechargeAnalytics = () => {
    const money = {
@@ -33,19 +35,82 @@ export const RechargeAnalytics = () => {
       ],
       legend: ["Recharge", "Loan", "Spent"]
    };
+
+   const filterResult = () => {
+      if (!query){
+         setDisplay(list_user);
+      }
+      else{
+         setDisplay(list_user.filter(user => user.id === query))
+      }
+   }
+
+   const [query, setQuery] = React.useState("");
+   const [page, setPage] = React.useState(0);
+   const [display, setDisplay] = React.useState(list_user);
+   const itemsPerPage = 5;
+   const numberOfPages = Math.ceil(list_user.length / itemsPerPage);
    
    return(
       <ScrollView>
-         <GradientBackground/>
-      
-         <View style={styles.card}>
-            <Text style={styles.label}>Total amount spent, deposited, borrowed</Text>
-            <LineChart
-               data={money}
-               width={screenWidth*0.8}
-               height={200}
-               chartConfig={chartConfig}
-            />
+         <View style={styles.container}>
+            <GradientBackground/>      
+            <View style={styles.card}>
+               <Text style={styles.label}>Total recharged</Text>
+               <LineChart
+                  data={money}
+                  width={screenWidth*0.8}
+                  height={200}
+                  chartConfig={chartConfig}
+               />
+            </View>
+
+            <View style={styles.paddingCard}>
+               <ScrollView horizontal>
+                  <DataTable style={{width:600}}>
+                     <Searchbar
+                        placeholder="Enter user ID"
+                        style={styles.searchContainer}
+                        inputStyle={{color:colors.BLACK}}
+                        onChangeText={text => setQuery(text)}
+                        onIconPress={filterResult}
+                        // keyboardType='number-pad'   
+                     />
+                     <DataTable.Header>
+                        <DataTable.Title>ID</DataTable.Title>
+                        <DataTable.Title>Phone</DataTable.Title>
+                        <DataTable.Title>Recharge</DataTable.Title>
+                        <DataTable.Title>% Card/Virtual</DataTable.Title>
+                     </DataTable.Header>
+
+                     {
+                     display
+                     .slice(
+                        page*itemsPerPage,
+                        page*itemsPerPage + itemsPerPage
+                     )
+                     .map(user => (
+                        <DataTable.Row key={user.id}>
+                           <DataTable.Cell>{user.id}</DataTable.Cell>
+                           <DataTable.Cell>{user.city}</DataTable.Cell>
+                           <DataTable.Cell>{user.calls}</DataTable.Cell>
+                           <DataTable.Cell>{user.data_used}</DataTable.Cell>
+                           <DataTable.Cell>{user.loan}</DataTable.Cell>
+                        </DataTable.Row>
+                     ))
+                     }
+                  <Text style={{marginTop:20, marginLeft: 10, color:'grey'}}>&lt;&lt; Swipe left to see more</Text>
+                  <Text></Text>
+                  <DataTable.Pagination
+                     page={page}
+                     numberOfPages={numberOfPages}
+                     onPageChange={page => setPage(page)}
+                     label={`${page+1} of ${numberOfPages}`}
+                     // style={{justifyContent: 'flex-start'}}
+                  />
+                  </DataTable>
+               </ScrollView>
+            </View>
          </View>
       </ScrollView>
    )

@@ -3,6 +3,7 @@ import { StyleSheet, Text, TouchableOpacity, View, ScrollView } from 'react-nati
 import { colors, chartConfig, screenWidth, containerWidth } from '../helpers/config';
 import GradientBackground from '../helpers/GradientBackground';
 import { DataTable, Searchbar } from 'react-native-paper';
+
 import {
    LineChart,
    BarChart,
@@ -14,109 +15,13 @@ import {
 import { history_calls } from '../data/history_calls';
 import { list_user } from '../data/list_user';
 
-export const SingleInfo = ({route}) => {
-   let user = route.params;
-   const data = [{
-      name: "Success",
-      percentage: Math.round(user.success_calls/user.calls*100),
-      color: "#28abb9",
-      legendFontColor: "#7F7F7F",
-      legendFontSize: 15,
-   },
-   {
-      name: "Unsuccess",
-      percentage: 100-Math.round(user.success_calls/user.calls*100),
-      color: "#2d6187",
-      legendFontColor: "#7F7F7F",
-      legendFontSize: 15
-   },
-   ]
-
-   const history_calls = {
-      labels: ["1","5","10","15","20","25","30"],
-      datasets: [
-        {
-          data: user.call_lengths,
-          color: (opacity = 1) => `rgb(73, 178, 123, ${opacity})`,
-          strokeWidth: 2
-        },
-      ],
-      legend: ["Lengths of calls"]
-   };
-   
-   const money = {
-      labels: ["1","5","10","15","20","25","30"],
-      datasets: [
-        {
-          data: [489,598,498, 979, 1038, 421, 399],
-          color: (opacity = 1) => `rgb(73, 178, 123, ${opacity})`,
-          strokeWidth: 2
-        },
-        {
-         data: [289,798,198, 879, 1038, 321, 599],
-         color: (opacity = 1) => `rgb(255, 199, 46, ${opacity})`,
-         strokeWidth: 2
-       },
-        {
-         data: [1489,1598,3498, 2979, 1088, 421, 1399],
-         color: (opacity = 1) => `rgb(232, 28, 21, ${opacity})`,
-         strokeWidth: 2
-       }
-      ],
-      legend: ["Recharge", "Loan", "Spent"]
-   };
-   
-   return(
-      <ScrollView>
-         <GradientBackground/>
-         <View style={styles.container}>   
-            <Card label='Number of Calls' value={user.calls} style={styles.paddingCard}/>
-
-            <View style={[styles.subcard, styles.card]}>
-               <Text style={styles.label}>Percentage of successful calls</Text>
-               <PieChart
-                  data={data}
-                  width={screenWidth*0.8}
-                  height={120}
-                  chartConfig={chartConfig}
-                  accessor="percentage"
-                  backgroundColor="transparent"
-                  paddingLeft="0"
-               />
-            </View>
-
-            <View style={[styles.subcard,styles.card]}>
-               <Text style={styles.label}>Data used by Month</Text>
-               <LineChart
-                  data={history_calls}
-                  width={screenWidth*0.8}
-                  height={200}
-                  chartConfig={chartConfig}
-               />
-            </View>
-            
-            <View style={[styles.subcard,styles.card]}>
-               <Text style={styles.label}>Balance fluctuations by Month</Text>
-               <LineChart
-                  data={money}
-                  width={screenWidth*0.8}
-                  height={200}
-                  chartConfig={chartConfig}
-               />
-            </View>
-         
-         </View>
-      </ScrollView>
-   )
-}
-
-export const UserAnalytics = () => {
+export const UserAnalytics = ({navigation}) => {
    const filterResult = () => {
       if (!query){
          setDisplay(list_user);
       }
       else{
-         setDisplay(list_user.filter(user => removeSpace(user.id) === removeSpace(query)))
+         setDisplay(list_user.filter(user => user.id === query))
       }
    }
 
@@ -181,19 +86,16 @@ export const UserAnalytics = () => {
                         page*itemsPerPage + itemsPerPage
                      )
                      .map(user => (
-                        <TouchableOpacity key={user.id}
-                           onPress={()=>navigation.navigate('SingleInfo', user)}>
-                           <DataTable.Row key={user.id}>
-                              <DataTable.Cell>{user.id}</DataTable.Cell>
-                              <DataTable.Cell>{user.city}</DataTable.Cell>
-                              <DataTable.Cell>{user.calls}</DataTable.Cell>
-                              <DataTable.Cell>{user.data_used}</DataTable.Cell>
-                              <DataTable.Cell>{user.loan}</DataTable.Cell>
-                              <DataTable.Cell>{user.payback}</DataTable.Cell>
-                              <DataTable.Cell>{user.creditscore}</DataTable.Cell>
-                              <DataTable.Cell>{user.label}</DataTable.Cell>
-                           </DataTable.Row>
-                        </TouchableOpacity>
+                        <DataTable.Row key={user.id}>
+                           <DataTable.Cell>{user.id}</DataTable.Cell>
+                           <DataTable.Cell>{user.city}</DataTable.Cell>
+                           <DataTable.Cell>{user.calls}</DataTable.Cell>
+                           <DataTable.Cell>{user.data_used}</DataTable.Cell>
+                           <DataTable.Cell>{user.loan}</DataTable.Cell>
+                           <DataTable.Cell>{user.payback}</DataTable.Cell>
+                           <DataTable.Cell>{user.creditscore}</DataTable.Cell>
+                           <DataTable.Cell>{user.label}</DataTable.Cell>
+                        </DataTable.Row>
                      ))
                      }
                   <Text style={{marginTop:20, marginLeft: 10, color:'grey'}}>&lt;&lt; Swipe left to see more</Text>
