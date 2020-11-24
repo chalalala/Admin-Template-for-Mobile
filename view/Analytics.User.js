@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View, ScrollView } from 'react-native';
-import { colors, chartConfig, screenWidth, containerWidth } from './helpers/config';
-import GradientBackground from './helpers/GradientBackground';
+import { colors, chartConfig, screenWidth, containerWidth } from '../helpers/config';
+import GradientBackground from '../helpers/GradientBackground';
 import { DataTable, Searchbar } from 'react-native-paper';
 import {
    LineChart,
@@ -11,8 +11,8 @@ import {
    ContributionGraph,
    StackedBarChart
 } from "react-native-chart-kit";
-import { history_calls } from './data/history_calls';
-import { list_user } from './data/list_user';
+import { history_calls } from '../data/history_calls';
+import { list_user } from '../data/list_user';
 
 export const SingleInfo = ({route}) => {
    let user = route.params;
@@ -165,14 +165,11 @@ export const UserAnalytics = () => {
                      />
                      <DataTable.Header>
                         <DataTable.Title>ID</DataTable.Title>
-                        <DataTable.Title>City</DataTable.Title>
+                        <DataTable.Title>Phone</DataTable.Title>
                         <DataTable.Title>No. of calls</DataTable.Title>
-                        <DataTable.Title>Success calls</DataTable.Title>
                         <DataTable.Title>Data used</DataTable.Title>
-                        {/* <DataTable.Title>Calls length</DataTable.Title> */}
-                        <DataTable.Title>Spent</DataTable.Title>
-                        <DataTable.Title>Recharge</DataTable.Title>
                         <DataTable.Title>Loan</DataTable.Title>
+                        <DataTable.Title>Payback</DataTable.Title>
                         <DataTable.Title>Credit score</DataTable.Title>
                         <DataTable.Title>Label</DataTable.Title>
                      </DataTable.Header>
@@ -190,13 +187,10 @@ export const UserAnalytics = () => {
                               <DataTable.Cell>{user.id}</DataTable.Cell>
                               <DataTable.Cell>{user.city}</DataTable.Cell>
                               <DataTable.Cell>{user.calls}</DataTable.Cell>
-                              <DataTable.Cell>{user.success_calls}</DataTable.Cell>
                               <DataTable.Cell>{user.data_used}</DataTable.Cell>
-                              {/* <DataTable.Cell>{user.call_lengths}</DataTable.Cell> */}
-                              <DataTable.Cell>{user.spent}</DataTable.Cell>
-                              <DataTable.Cell>{user.recharge}</DataTable.Cell>
                               <DataTable.Cell>{user.loan}</DataTable.Cell>
-                              <DataTable.Cell>{user.score}</DataTable.Cell>
+                              <DataTable.Cell>{user.payback}</DataTable.Cell>
+                              <DataTable.Cell>{user.creditscore}</DataTable.Cell>
                               <DataTable.Cell>{user.label}</DataTable.Cell>
                            </DataTable.Row>
                         </TouchableOpacity>

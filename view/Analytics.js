@@ -1,13 +1,13 @@
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View, ScrollView } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { colors, screenWidth, containerWidth } from './helpers/config';
+import { colors, screenWidth, containerWidth } from '../helpers/config';
 
 import { FontAwesome5 } from '@expo/vector-icons'; 
 import { FontAwesome } from '@expo/vector-icons'; 
 import { Entypo } from '@expo/vector-icons'; 
 
-import GradientBackground from './helpers/GradientBackground';
+import GradientBackground from '../helpers/GradientBackground';
 
 import { RegionAnalytics } from './Analytics.Region';
 import { RechargeAnalytics } from './Analytics.Recharge';

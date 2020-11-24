@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, ScrollView } from 'react-native';
-import { colors, chartConfig, screenWidth, containerWidth } from './helpers/config';
-import GradientBackground from './helpers/GradientBackground';
+import { colors, chartConfig, screenWidth, containerWidth } from '../helpers/config';
+import GradientBackground from '../helpers/GradientBackground';
 
 import {
    LineChart,
@@ -11,8 +11,8 @@ import {
    ContributionGraph,
    StackedBarChart
 } from "react-native-chart-kit";
-import { distribution } from './data/distribution.js';
-import { history_calls } from './data/history_calls';
+import { distribution } from '../data/distribution.js';
+import { history_calls } from '../data/history_calls';
 
 export const RegionAnalytics = () => {
    const data = {

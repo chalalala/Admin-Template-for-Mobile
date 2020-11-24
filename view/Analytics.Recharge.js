@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, ScrollView } from 'react-native';
-import { colors, chartConfig, screenWidth, containerWidth } from './helpers/config';
-import GradientBackground from './helpers/GradientBackground';
+import { colors, chartConfig, screenWidth, containerWidth } from '../helpers/config';
+import GradientBackground from '../helpers/GradientBackground';
 import {
    LineChart,
    BarChart,
