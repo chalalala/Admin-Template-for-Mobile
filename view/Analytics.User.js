@@ -12,7 +12,8 @@ import {
    ContributionGraph,
    StackedBarChart
 } from "react-native-chart-kit";
-import { history_calls } from '../data/history_calls';
+import { totalCalls } from '../data/totalCalls';
+import { dataUsed } from '../data/dataUsed';
 import { list_user } from '../data/list_user';
 
 export const UserAnalytics = ({navigation}) => {
@@ -38,8 +39,8 @@ export const UserAnalytics = ({navigation}) => {
             <View style={styles.card}>
                <Text style={styles.label}>The total calls made</Text>
                <LineChart
-                  data={history_calls}
-                  width={containerWidth}
+                  data={totalCalls}
+                  width={screenWidth*0.8}
                   height={220}
                   chartConfig={chartConfig}
                   withHorizontalLabels	
@@ -49,7 +50,7 @@ export const UserAnalytics = ({navigation}) => {
             <View style={styles.card}>
                <Text style={styles.label}>Data used</Text>
                <BarChart
-               data={history_calls}
+               data={dataUsed}
                width={screenWidth*0.8}
                height={220}
                chartConfig={chartConfig}
