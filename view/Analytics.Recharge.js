@@ -31,13 +31,13 @@ export const RechargeAnalytics = () => {
    const [display, setDisplay] = React.useState(data);
    const [data, setData] = React.useState([]);
    const itemsPerPage = 5;
-   var numberOfPages;
+   const [numberOfPages, setNoPages] = React.useState(0);
    const [loading, setLoading] = React.useState(true);
 
    const getData = () => {
       axios.get('https://chalalala.github.io/The2000th-API/rechargeInfo.json')
       .then(response => {
-         numberOfPages = Math.ceil(response.data.length / itemsPerPage);
+         setNoPages(Math.ceil(response.data.length / itemsPerPage));
          console.log(response.data);
          setData(response.data);
          setLoading(false);
