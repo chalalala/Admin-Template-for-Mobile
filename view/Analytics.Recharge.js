@@ -44,9 +44,9 @@ export const RechargeAnalytics = () => {
    const getData = () => {
       axios.get('https://chalalala.github.io/The2000th-API/rechargeInfo.json')
       .then(response => {
-         console.log(response);
+         console.log(response.slice(page,page*itemsPerPage+itemsPerPage));
          // console.log(typeof(response));
-         // setData(JSON.parse(response).slice(page,page*itemsPerPage+itemsPerPage));
+         // setData(response.slice(page,page*itemsPerPage+itemsPerPage));
          setLoading(false);
       })
       .catch(function (error) {
