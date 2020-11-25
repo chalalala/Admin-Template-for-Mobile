@@ -36,17 +36,18 @@ export const RechargeAnalytics = () => {
 
    const [query, setQuery] = React.useState("");
    const [page, setPage] = React.useState(0);
+   const [display, setDisplay] = React.useState(data);
    const [data, setData] = React.useState([]);
    const itemsPerPage = 5;
-   const numberOfPages = Math.ceil(data.length / itemsPerPage);
+   var numberOfPages;
    const [loading, setLoading] = React.useState(true);
 
    const getData = () => {
       axios.get('https://chalalala.github.io/The2000th-API/rechargeInfo.json')
       .then(response => {
-         console.log(response.data.slice(page,page*itemsPerPage+itemsPerPage));
+         console.log(response.data);
          // console.log(typeof(response));
-         setData(response.data.slice(page,page*itemsPerPage+itemsPerPage));
+         setData(response.data);
          setLoading(false);
       })
       .catch(function (error) {
@@ -56,9 +57,9 @@ export const RechargeAnalytics = () => {
 
    useEffect(() => {
       getData();
+      setDisplay(data);
    },[])  
 
-   const [display, setDisplay] = React.useState(data);
    const filterResult = () => {
       if (!query){
          setDisplay(data);
@@ -92,7 +93,7 @@ export const RechargeAnalytics = () => {
 
             <View style={styles.paddingCard}>
                <ScrollView horizontal>
-                  <DataTable style={{width:600}}>
+                  <DataTable style={{width:800}}>
                      <Searchbar
                         placeholder="Enter user ID"
                         style={styles.searchContainer}
@@ -104,7 +105,8 @@ export const RechargeAnalytics = () => {
                      <DataTable.Header>
                         <DataTable.Title>ID</DataTable.Title>
                         <DataTable.Title>Recharge</DataTable.Title>
-                        <DataTable.Title>Card/Virtual</DataTable.Title>
+                        <DataTable.Title>Card payment</DataTable.Title>
+                        <DataTable.Title>Virtual payment</DataTable.Title>
                      </DataTable.Header>
 
                      {
@@ -117,7 +119,8 @@ export const RechargeAnalytics = () => {
                         <DataTable.Row key={user.msisdn}>
                            <DataTable.Cell>{user.msisdn}</DataTable.Cell>
                            <DataTable.Cell>{user.sum_recharge}</DataTable.Cell>
-                           <DataTable.Cell>{user.sum_C/user.sum_V}</DataTable.Cell>
+                           <DataTable.Cell>{user.sum_C}</DataTable.Cell>
+                           <DataTable.Cell>{user.sum_V}</DataTable.Cell>
                         </DataTable.Row>
                      ))
                      }
