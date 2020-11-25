@@ -1,7 +1,8 @@
-import React from 'react';
-import { StyleSheet, Text, TouchableOpacity, View, ScrollView } from 'react-native';
+import React, { useEffect } from 'react';
+import { StyleSheet, Text, TouchableOpacity, View, ScrollView, ActivityIndicator } from 'react-native';
 import { colors, chartConfig, screenWidth, containerWidth } from '../helpers/config';
 import GradientBackground from '../helpers/GradientBackground';
+import readTextFile from '../actions/systemActions';
 import { DataTable, Searchbar } from 'react-native-paper';
 import {
    LineChart,
@@ -11,7 +12,8 @@ import {
    ContributionGraph,
    StackedBarChart
 } from "react-native-chart-kit";
-import { list_user } from '../data/list_user';
+//  import getData from '../actions/systemActions';
+import axios from 'axios'; 
 
 export const RechargeAnalytics = () => {
    const money = {
@@ -28,31 +30,53 @@ export const RechargeAnalytics = () => {
          color: (opacity = 1) => `rgb(255, 199, 46, ${opacity})`,
          strokeWidth: 2
        },
-      //   {
-      //    data: [1489,1598,3498, 2979, 1088, 421, 1399],
-      //    color: (opacity = 1) => `rgb(232, 28, 21, ${opacity})`,
-      //    strokeWidth: 2
-      //  }
       ],
       legend: ["Recharge", "Loan"]
    };
 
+   const [query, setQuery] = React.useState("");
+   const [page, setPage] = React.useState(0);
+   const [data, setData] = React.useState([]);
+   const itemsPerPage = 5;
+   const numberOfPages = Math.ceil(data.length / itemsPerPage);
+   const [loading, setLoading] = React.useState(true);
+
+   const getData = () => {
+      axios.get('https://chalalala.github.io/The2000th-API/rechargeInfo.json')
+      .then(response => {
+         console.log(response);
+         // console.log(typeof(response));
+         // setData(JSON.parse(response).slice(page,page*itemsPerPage+itemsPerPage));
+         setLoading(false);
+      })
+      .catch(function (error) {
+          console.log(error);
+      })
+   }
+
+   useEffect(() => {
+      getData();
+   },[])  
+
+   const [display, setDisplay] = React.useState(data);
    const filterResult = () => {
       if (!query){
-         setDisplay(list_user);
+         setDisplay(data);
       }
       else{
-         setDisplay(list_user.filter(user => user.id === query))
+         setDisplay(data.filter(user => user.msisdn === query))
       }
    }
 
-   const [query, setQuery] = React.useState("");
-   const [page, setPage] = React.useState(0);
-   const [display, setDisplay] = React.useState(list_user);
-   const itemsPerPage = 5;
-   const numberOfPages = Math.ceil(list_user.length / itemsPerPage);
-   
-   return(
+   if (loading === true){
+      return(
+         <View style={styles.container}>
+            <GradientBackground/>
+            <ActivityIndicator size="large" color="white"/>
+         </View>
+      )
+   }
+   else return(
       <ScrollView>
          <View style={styles.container}>
             <GradientBackground/>      
@@ -79,9 +103,8 @@ export const RechargeAnalytics = () => {
                      />
                      <DataTable.Header>
                         <DataTable.Title>ID</DataTable.Title>
-                        <DataTable.Title>Phone</DataTable.Title>
                         <DataTable.Title>Recharge</DataTable.Title>
-                        <DataTable.Title>% Card/Virtual</DataTable.Title>
+                        <DataTable.Title>Card/Virtual</DataTable.Title>
                      </DataTable.Header>
 
                      {
@@ -91,12 +114,10 @@ export const RechargeAnalytics = () => {
                         page*itemsPerPage + itemsPerPage
                      )
                      .map(user => (
-                        <DataTable.Row key={user.id}>
-                           <DataTable.Cell>{user.id}</DataTable.Cell>
-                           <DataTable.Cell>{user.city}</DataTable.Cell>
-                           <DataTable.Cell>{user.calls}</DataTable.Cell>
-                           <DataTable.Cell>{user.data_used}</DataTable.Cell>
-                           <DataTable.Cell>{user.loan}</DataTable.Cell>
+                        <DataTable.Row key={user.msisdn}>
+                           <DataTable.Cell>{user.msisdn}</DataTable.Cell>
+                           <DataTable.Cell>{user.sum_recharge}</DataTable.Cell>
+                           <DataTable.Cell>{user.sum_C/user.sum_V}</DataTable.Cell>
                         </DataTable.Row>
                      ))
                      }

@@ -1,7 +1,7 @@
 import React from 'react';
 
 const defaultGlobalState = {
-   user: null,
+   user: 'Mai Doan',
 };
 const globalStateContext = React.createContext(defaultGlobalState);
 const dispatchStateContext = React.createContext(undefined);
