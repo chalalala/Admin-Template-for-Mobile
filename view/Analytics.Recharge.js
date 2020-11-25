@@ -1,18 +1,10 @@
 import React, { useEffect } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View, ScrollView, ActivityIndicator } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, ActivityIndicator } from 'react-native';
 import { colors, chartConfig, screenWidth, containerWidth } from '../helpers/config';
 import GradientBackground from '../helpers/GradientBackground';
 import readTextFile from '../actions/systemActions';
 import { DataTable, Searchbar } from 'react-native-paper';
-import {
-   LineChart,
-   BarChart,
-   PieChart,
-   ProgressChart,
-   ContributionGraph,
-   StackedBarChart
-} from "react-native-chart-kit";
-//  import getData from '../actions/systemActions';
+import { LineChart } from "react-native-chart-kit";
 import axios from 'axios'; 
 
 export const RechargeAnalytics = () => {
@@ -45,8 +37,8 @@ export const RechargeAnalytics = () => {
    const getData = () => {
       axios.get('https://chalalala.github.io/The2000th-API/rechargeInfo.json')
       .then(response => {
+         numberOfPages = Math.ceil(response.data.length / itemsPerPage);
          console.log(response.data);
-         // console.log(typeof(response));
          setData(response.data);
          setLoading(false);
       })
@@ -130,7 +122,7 @@ export const RechargeAnalytics = () => {
                      page={page}
                      numberOfPages={numberOfPages}
                      onPageChange={page => setPage(page)}
-                     label={`Page ${page+1}`}
+                     label={`${page+1} of ${numberOfPages}`}
                      // style={{justifyContent: 'flex-start'}}
                   />
                   </DataTable>

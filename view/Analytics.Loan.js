@@ -1,34 +1,13 @@
-import React from 'react';
-import { StyleSheet, Text, TouchableOpacity, View, ScrollView } from 'react-native';
+import React, { useEffect } from 'react';
+import { StyleSheet, Text, View, ScrollView, ActivityIndicator } from 'react-native';
 import { colors, chartConfig, screenWidth, containerWidth } from '../helpers/config';
 import GradientBackground from '../helpers/GradientBackground';
 import { DataTable, Searchbar } from 'react-native-paper';
-import {
-   LineChart,
-   BarChart,
-   PieChart,
-   ProgressChart,
-   ContributionGraph,
-   StackedBarChart
-} from "react-native-chart-kit";
-import { list_user } from '../data/list_user';
+import axios from 'axios'; 
+
+import { LineChart } from "react-native-chart-kit";
 
 export const LoanAnalytics = () => {
-   const filterResult = () => {
-      if (!query){
-         setDisplay(list_user);
-      }
-      else{
-         setDisplay(list_user.filter(user => user.id === query))
-      }
-   }
-
-   const [query, setQuery] = React.useState("");
-   const [page, setPage] = React.useState(0);
-   const [display, setDisplay] = React.useState(list_user);
-   const itemsPerPage = 5;
-   const numberOfPages = Math.ceil(list_user.length / itemsPerPage);
-
    const paymentMethod = {
       labels: ["1","5","10","15","20","25","30"],
       datasets: [
@@ -46,7 +25,50 @@ export const LoanAnalytics = () => {
       legend: ["Card", "Virtual"]
    };
 
-   return(
+   const [query, setQuery] = React.useState("");
+   const [page, setPage] = React.useState(0);
+   const [display, setDisplay] = React.useState(data);
+   const [data, setData] = React.useState([]);
+   const itemsPerPage = 5;
+   var numberOfPages;
+   const [loading, setLoading] = React.useState(true);
+
+   const getData = () => {
+      axios.get('https://chalalala.github.io/The2000th-API/loan_info.json')
+      .then(response => {
+         numberOfPages = Math.ceil(response.data.length / itemsPerPage);
+         console.log(response.data);
+         setData(response.data);
+         setLoading(false);
+      })
+      .catch(function (error) {
+          console.log(error);
+      })
+   }
+
+   useEffect(() => {
+      getData();
+      setDisplay(data);
+   },[])  
+
+   const filterResult = () => {
+      if (!query){
+         setDisplay(data);
+      }
+      else{
+         setDisplay(data.filter(user => user.msisdn === query))
+      }
+   }
+
+   if (loading === true){
+      return(
+         <View style={styles.container}>
+            <GradientBackground/>
+            <ActivityIndicator size="large" color="white"/>
+         </View>
+      )
+   }
+   else return(
       <ScrollView>
          <GradientBackground/>
          <View style={styles.container}>
@@ -73,7 +95,6 @@ export const LoanAnalytics = () => {
                      />
                      <DataTable.Header>
                         <DataTable.Title>ID</DataTable.Title>
-                        <DataTable.Title>Phone</DataTable.Title>
                         <DataTable.Title>Loan</DataTable.Title>
                         <DataTable.Title>Payback</DataTable.Title>
                         <DataTable.Title>Debt</DataTable.Title>
@@ -86,12 +107,11 @@ export const LoanAnalytics = () => {
                         page*itemsPerPage + itemsPerPage
                      )
                      .map(user => (
-                        <DataTable.Row key={user.id}>
-                           <DataTable.Cell>{user.id}</DataTable.Cell>
-                           <DataTable.Cell>{user.city}</DataTable.Cell>
-                           <DataTable.Cell>{user.calls}</DataTable.Cell>
-                           <DataTable.Cell>{user.data_used}</DataTable.Cell>
-                           <DataTable.Cell>{user.loan}</DataTable.Cell>
+                        <DataTable.Row key={user.msisdn}>
+                           <DataTable.Cell>{user.msisdn}</DataTable.Cell>
+                           <DataTable.Cell>{user.num_loan}</DataTable.Cell>
+                           <DataTable.Cell>{user.num_repay}</DataTable.Cell>
+                           <DataTable.Cell>{user.remaining_debt}</DataTable.Cell>
                         </DataTable.Row>
                      ))
                      }
