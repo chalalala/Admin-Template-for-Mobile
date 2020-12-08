@@ -7,6 +7,98 @@ import axios from 'axios';
 
 import { LineChart } from "react-native-chart-kit";
 
+const Table = () =>{
+   const [query, setQuery] = React.useState("");
+   const [page, setPage] = React.useState(0);
+   const [display, setDisplay] = React.useState(data);
+   const [data, setData] = React.useState([]);
+   const itemsPerPage = 5;
+   const [numberOfPages, setNoPages] = React.useState(0);
+   const [loading, setLoading] = React.useState(true);
+   
+   const filterResult = () => {
+      if (!query){
+         getData();
+      }
+      else{
+         setDisplay(display.filter(user => user.msisdn.includes(query)))
+      }
+   }
+
+   const getData = () => {
+      setLoading(true);
+      axios.get('https://chalalala.github.io/The2000th-API/loan_info.json')
+      .then(response => {
+         setNoPages(Math.ceil(response.data.length / itemsPerPage));
+         // console.log(response.data);
+         setDisplay(response.data);
+         setLoading(false);
+      })
+      .catch(function (error) {
+          console.log(error);
+      })
+   }
+
+   useEffect(() => {
+      getData();
+   },[])  
+
+   if (loading){
+      return(            
+         <View style={[styles.container, {height:500}]}>
+            <ActivityIndicator size="large" color={colors.VTBLUE}/>
+         </View>
+      )
+   }
+   else{
+      return(
+         <ScrollView horizontal>
+            <DataTable style={{width:900}}>
+               <Searchbar
+                  placeholder="Enter user ID"
+                  style={styles.searchContainer}
+                  inputStyle={{color:colors.BLACK}}
+                  onChangeText={text => setQuery(text)}
+                  onIconPress={filterResult}
+                  // keyboardType='number-pad'   
+               />
+               <DataTable.Header>
+                  <DataTable.Title>ID</DataTable.Title>
+                  <DataTable.Title>Loan</DataTable.Title>
+                  <DataTable.Title>Payback</DataTable.Title>
+                  <DataTable.Title>Debt</DataTable.Title>
+               </DataTable.Header>
+
+               {
+               display
+               .slice(
+                  page*itemsPerPage,
+                  page*itemsPerPage + itemsPerPage
+               )
+               .map(user => (
+                  <DataTable.Row key={user.msisdn}>
+                     <DataTable.Cell>{user.msisdn}</DataTable.Cell>
+                     <DataTable.Cell>{user.num_loan}</DataTable.Cell>
+                     <DataTable.Cell>{user.num_repay}</DataTable.Cell>
+                     <DataTable.Cell>{user.remaining_debt}</DataTable.Cell>
+                  </DataTable.Row>
+               ))
+               }
+            <Text style={{marginTop:20, marginLeft: 10, color:'grey'}}>&lt;&lt; Swipe left to see more</Text>
+            <Text></Text>
+            <DataTable.Pagination
+               page={page}
+               numberOfPages={numberOfPages}
+               onPageChange={page => setPage(page)}
+               label={`${page+1} of ${numberOfPages}`}
+               // style={{justifyContent: 'flex-start'}}
+            />
+            </DataTable>
+         </ScrollView>
+      )
+   }
+}
+
 export const LoanAnalytics = () => {
    const paymentMethod = {
       labels: ["1","5","10","15","20","25","30"],
@@ -25,53 +117,10 @@ export const LoanAnalytics = () => {
       legend: ["Card", "Virtual"]
    };
 
-   const [query, setQuery] = React.useState("");
-   const [page, setPage] = React.useState(0);
-   const [display, setDisplay] = React.useState(data);
-   const [data, setData] = React.useState([]);
-   const itemsPerPage = 5;
-   const [numberOfPages, setNoPages] = React.useState(0);
-   const [loading, setLoading] = React.useState(true);
-
-   const getData = () => {
-      axios.get('https://chalalala.github.io/The2000th-API/loan_info.json')
-      .then(response => {
-         setNoPages(Math.ceil(response.data.length / itemsPerPage));
-         console.log(response.data);
-         setData(response.data);
-         setLoading(false);
-      })
-      .catch(function (error) {
-          console.log(error);
-      })
-   }
-
-   useEffect(() => {
-      getData();
-      setDisplay(data);
-   },[])  
-
-   const filterResult = () => {
-      if (!query){
-         setDisplay(data);
-      }
-      else{
-         setDisplay(data.filter(user => user.msisdn === query))
-      }
-   }
-
-   if (loading === true){
-      return(
+   return(
+      <ScrollView>
          <View style={styles.container}>
             <GradientBackground/>
-            <ActivityIndicator size="large" color="white"/>
-         </View>
-      )
-   }
-   else return(
-      <ScrollView>
-         <GradientBackground/>
-         <View style={styles.container}>
             <View style={styles.card}>
                <Text style={styles.label}>Money flow</Text>
                <LineChart
@@ -83,49 +132,7 @@ export const LoanAnalytics = () => {
             </View>
 
             <View style={styles.paddingCard}>
-               <ScrollView horizontal>
-                  <DataTable style={{width:600}}>
-                     <Searchbar
-                        placeholder="Enter user ID"
-                        style={styles.searchContainer}
-                        inputStyle={{color:colors.BLACK}}
-                        onChangeText={text => setQuery(text)}
-                        onIconPress={filterResult}
-                        // keyboardType='number-pad'   
-                     />
-                     <DataTable.Header>
-                        <DataTable.Title>ID</DataTable.Title>
-                        <DataTable.Title>Loan</DataTable.Title>
-                        <DataTable.Title>Payback</DataTable.Title>
-                        <DataTable.Title>Debt</DataTable.Title>
-                     </DataTable.Header>
-
-                     {
-                     display
-                     .slice(
-                        page*itemsPerPage,
-                        page*itemsPerPage + itemsPerPage
-                     )
-                     .map(user => (
-                        <DataTable.Row key={user.msisdn}>
-                           <DataTable.Cell>{user.msisdn}</DataTable.Cell>
-                           <DataTable.Cell>{user.num_loan}</DataTable.Cell>
-                           <DataTable.Cell>{user.num_repay}</DataTable.Cell>
-                           <DataTable.Cell>{user.remaining_debt}</DataTable.Cell>
-                        </DataTable.Row>
-                     ))
-                     }
-                  <Text style={{marginTop:20, marginLeft: 10, color:'grey'}}>&lt;&lt; Swipe left to see more</Text>
-                  <Text></Text>
-                  <DataTable.Pagination
-                     page={page}
-                     numberOfPages={numberOfPages}
-                     onPageChange={page => setPage(page)}
-                     label={`${page+1} of ${numberOfPages}`}
-                     // style={{justifyContent: 'flex-start'}}
-                  />
-                  </DataTable>
-               </ScrollView>
+               <Table/>
             </View>
          </View>
       </ScrollView>

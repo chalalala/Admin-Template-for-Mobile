@@ -12,7 +12,7 @@ import {
 import { totalCalls } from '../data/totalCalls';
 import { dataUsed } from '../data/dataUsed';
 
-export const UserAnalytics = ({navigation}) => {
+const Table = () =>{
    const [query, setQuery] = React.useState("");
    const [page, setPage] = React.useState(0);
    const [display, setDisplay] = React.useState(data);
@@ -20,13 +20,23 @@ export const UserAnalytics = ({navigation}) => {
    const itemsPerPage = 5;
    const [numberOfPages, setNoPages] = React.useState(0);
    const [loading, setLoading] = React.useState(true);
+   
+   const filterResult = () => {
+      if (!query){
+         getData();
+      }
+      else{
+         setDisplay(display.filter(user => user.msisdn.includes(query)))
+      }
+   }
 
    const getData = () => {
+      setLoading(true);
       axios.get('https://chalalala.github.io/The2000th-API/userInfo.json')
       .then(response => {
          setNoPages(Math.ceil(response.data.length / itemsPerPage));
-         console.log(response.data);
-         setData(response.data);
+         // console.log(response.data);
+         setDisplay(response.data);
          setLoading(false);
       })
       .catch(function (error) {
@@ -36,31 +46,69 @@ export const UserAnalytics = ({navigation}) => {
 
    useEffect(() => {
       getData();
-      setDisplay(data);
    },[])  
 
-   const filterResult = () => {
-      if (!query){
-         setDisplay(data);
-      }
-      else{
-         setDisplay(data.filter(user => user.msisdn === query))
-      }
-   }
-
-   if (loading === true){
-      return(
-         <View style={styles.container}>
-            <GradientBackground/>
-            <ActivityIndicator size="large" color="white"/>
+   if (loading){
+      return(            
+         <View style={[styles.container, {height:400}]}>
+            <ActivityIndicator size="large" color={colors.VTBLUE}/>
          </View>
       )
    }
+   else{
+      return(
+         <ScrollView horizontal>
+            <DataTable style={{width:800}}>
+               <Searchbar
+                  placeholder="Enter user ID"
+                  style={styles.searchContainer}
+                  inputStyle={{color:colors.BLACK}}
+                  onChangeText={text => setQuery(text)}
+                  onIconPress={filterResult}
+                  // keyboardType='number-pad'   
+               />
+               <DataTable.Header>
+                  <DataTable.Title>ID</DataTable.Title>
+                  <DataTable.Title>Age</DataTable.Title>
+                  <DataTable.Title>City</DataTable.Title>
+                  <DataTable.Title>Label</DataTable.Title>
+               </DataTable.Header>
 
-   else return(
+               {
+               display
+               .slice(
+                  page*itemsPerPage,
+                  page*itemsPerPage + itemsPerPage
+               )
+               .map(user => (
+                  <DataTable.Row key={user.msisdn}>
+                     <DataTable.Cell>{user.msisdn}</DataTable.Cell>
+                     <DataTable.Cell>{user.Age}</DataTable.Cell>
+                     <DataTable.Cell>{user.City}</DataTable.Cell>
+                     <DataTable.Cell>{user.label}</DataTable.Cell>
+                  </DataTable.Row>
+               ))
+               }
+            <Text style={{marginTop:20, marginLeft: 10, color:'grey'}}>&lt;&lt; Swipe left to see more</Text>
+            <Text></Text>
+            <DataTable.Pagination
+               page={page}
+               numberOfPages={numberOfPages}
+               onPageChange={page => setPage(page)}
+               label={`${page+1} of ${numberOfPages}`}
+               // style={{justifyContent: 'flex-start'}}
+            />
+            </DataTable>
+         </ScrollView>
+      )
+   }
+}
+
+export const UserAnalytics = ({navigation}) => {
+   return(
       <ScrollView>
-         <GradientBackground/>
          <View style={styles.container}>
+            <GradientBackground/>
             <View style={styles.card}>
                <Text style={styles.label}>The total calls made</Text>
                <LineChart
@@ -84,49 +132,7 @@ export const UserAnalytics = ({navigation}) => {
             </View>
 
             <View style={styles.paddingCard}>
-               <ScrollView horizontal>
-                  <DataTable style={{width:900}}>
-                     <Searchbar
-                        placeholder="Enter user ID"
-                        style={styles.searchContainer}
-                        inputStyle={{color:colors.BLACK}}
-                        onChangeText={text => setQuery(text)}
-                        onIconPress={filterResult}
-                        // keyboardType='number-pad'   
-                     />
-                     <DataTable.Header>
-                        <DataTable.Title>ID</DataTable.Title>
-                        <DataTable.Title>Age</DataTable.Title>
-                        <DataTable.Title>City</DataTable.Title>
-                        <DataTable.Title>Label</DataTable.Title>
-                     </DataTable.Header>
-
-                     {
-                     display
-                     .slice(
-                        page*itemsPerPage,
-                        page*itemsPerPage + itemsPerPage
-                     )
-                     .map(user => (
-                        <DataTable.Row key={user.msisdn}>
-                           <DataTable.Cell>{user.msisdn}</DataTable.Cell>
-                           <DataTable.Cell>{user.Age}</DataTable.Cell>
-                           <DataTable.Cell>{user.City}</DataTable.Cell>
-                           <DataTable.Cell>{user.label}</DataTable.Cell>
-                        </DataTable.Row>
-                     ))
-                     }
-                  <Text style={{marginTop:20, marginLeft: 10, color:'grey'}}>&lt;&lt; Swipe left to see more</Text>
-                  <Text></Text>
-                  <DataTable.Pagination
-                     page={page}
-                     numberOfPages={numberOfPages}
-                     onPageChange={page => setPage(page)}
-                     label={`${page+1} of ${numberOfPages}`}
-                     // style={{justifyContent: 'flex-start'}}
-                  />
-                  </DataTable>
-               </ScrollView>
+               <Table/>
             </View>
          </View>
       </ScrollView>

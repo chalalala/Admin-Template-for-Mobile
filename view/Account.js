@@ -6,6 +6,7 @@ import GradientBackground from '../helpers/GradientBackground';
 import { colors } from '../helpers/config';
 import { MaterialIcons } from '@expo/vector-icons'; 
 import axios from 'axios';
+import { accounts } from '../data/accounts';
 
 const Stack = createStackNavigator();
 
@@ -16,23 +17,23 @@ export const LoginScreen = () => {
    const [pwd, setPwd] = useState("");
    const [message, setMsg] = useState("");
  
-   const fetchUserAccount = () => {
-     axios.get('http://192.168.1.3:5000/getUserAccount')
-     .then(response => {
-         console.log(response.data);
-         setList(response.data);
-     })
-     .catch(function (error) {
-         console.log(error);
-     })
-   }
+   // const fetchUserAccount = () => {
+   //   axios.get('http://192.168.1.3:5000/getUserAccount')
+   //   .then(response => {
+   //       console.log(response.data);
+   //       setList(response.data);
+   //   })
+   //   .catch(function (error) {
+   //       console.log(error);
+   //   })
+   // }
  
-   useEffect(() => {
-     fetchUserAccount();
-   },[]);
+   // useEffect(() => {
+   //   fetchUserAccount();
+   // },[]);
  
    const login = () => {
-     let _acc = userList.find(item => item.email === email);
+     let _acc = accounts.find(item => item.account === email);
      if (_acc){
        if (_acc.password === pwd){
          dispatch({ user: _acc.name });

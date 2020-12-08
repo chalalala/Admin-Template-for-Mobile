@@ -7,6 +7,98 @@ import { DataTable, Searchbar } from 'react-native-paper';
 import { LineChart } from "react-native-chart-kit";
 import axios from 'axios'; 
 
+const Table = () =>{
+   const [query, setQuery] = React.useState("");
+   const [page, setPage] = React.useState(0);
+   const [display, setDisplay] = React.useState(data);
+   const [data, setData] = React.useState([]);
+   const itemsPerPage = 5;
+   const [numberOfPages, setNoPages] = React.useState(0);
+   const [loading, setLoading] = React.useState(true);
+   
+   const filterResult = () => {
+      if (!query){
+         getData();
+      }
+      else{
+         setDisplay(display.filter(user => user.msisdn.includes(query)))
+      }
+   }
+
+   const getData = () => {
+      setLoading(true);
+      axios.get('https://chalalala.github.io/The2000th-API/rechargeInfo.json')
+      .then(response => {
+         setNoPages(Math.ceil(response.data.length / itemsPerPage));
+         // console.log(response.data);
+         setDisplay(response.data);
+         setLoading(false);
+      })
+      .catch(function (error) {
+          console.log(error);
+      })
+   }
+
+   useEffect(() => {
+      getData();
+   },[])  
+
+   if (loading){
+      return(            
+         <View style={[styles.container, {height:400}]}>
+            <ActivityIndicator size="large" color={colors.VTBLUE}/>
+         </View>
+      )
+   }
+   else{
+      return(
+         <ScrollView horizontal>
+            <DataTable style={{width:800}}>
+               <Searchbar
+                  placeholder="Enter user ID"
+                  style={styles.searchContainer}
+                  inputStyle={{color:colors.BLACK}}
+                  onChangeText={text => setQuery(text)}
+                  onIconPress={filterResult}
+                  // keyboardType='number-pad'   
+               />
+               <DataTable.Header>
+                  <DataTable.Title>ID</DataTable.Title>
+                  <DataTable.Title>Recharge</DataTable.Title>
+                  <DataTable.Title>Card payment</DataTable.Title>
+                  <DataTable.Title>Virtual payment</DataTable.Title>
+               </DataTable.Header>
+
+               {
+               display
+               .slice(
+                  page*itemsPerPage,
+                  page*itemsPerPage + itemsPerPage
+               )
+               .map(user => (
+                  <DataTable.Row key={user.msisdn}>
+                     <DataTable.Cell>{user.msisdn}</DataTable.Cell>
+                     <DataTable.Cell>{user.sum_recharge}</DataTable.Cell>
+                     <DataTable.Cell>{user.sum_C}</DataTable.Cell>
+                     <DataTable.Cell>{user.sum_V}</DataTable.Cell>
+                  </DataTable.Row>
+               ))
+               }
+            <Text style={{marginTop:20, marginLeft: 10, color:'grey'}}>&lt;&lt; Swipe left to see more</Text>
+            <Text></Text>
+            <DataTable.Pagination
+               page={page}
+               numberOfPages={numberOfPages}
+               onPageChange={page => setPage(page)}
+               label={`${page+1} of ${numberOfPages}`}
+               // style={{justifyContent: 'flex-start'}}
+            />
+            </DataTable>
+         </ScrollView>
+      )
+   }
+}
+
 export const RechargeAnalytics = () => {
    const money = {
       labels: ["1","5","10","15","20","25","30"],
@@ -26,50 +118,7 @@ export const RechargeAnalytics = () => {
       legend: ["Recharge", "Loan"]
    };
 
-   const [query, setQuery] = React.useState("");
-   const [page, setPage] = React.useState(0);
-   const [display, setDisplay] = React.useState(data);
-   const [data, setData] = React.useState([]);
-   const itemsPerPage = 5;
-   const [numberOfPages, setNoPages] = React.useState(0);
-   const [loading, setLoading] = React.useState(true);
-
-   const getData = () => {
-      axios.get('https://chalalala.github.io/The2000th-API/rechargeInfo.json')
-      .then(response => {
-         setNoPages(Math.ceil(response.data.length / itemsPerPage));
-         console.log(response.data);
-         setData(response.data);
-         setLoading(false);
-      })
-      .catch(function (error) {
-          console.log(error);
-      })
-   }
-
-   useEffect(() => {
-      getData();
-      setDisplay(data);
-   },[])  
-
-   const filterResult = () => {
-      if (!query){
-         setDisplay(data);
-      }
-      else{
-         setDisplay(data.filter(user => user.msisdn === query))
-      }
-   }
-
-   if (loading === true){
-      return(
-         <View style={styles.container}>
-            <GradientBackground/>
-            <ActivityIndicator size="large" color="white"/>
-         </View>
-      )
-   }
-   else return(
+   return(
       <ScrollView>
          <View style={styles.container}>
             <GradientBackground/>      
@@ -84,49 +133,7 @@ export const RechargeAnalytics = () => {
             </View>
 
             <View style={styles.paddingCard}>
-               <ScrollView horizontal>
-                  <DataTable style={{width:800}}>
-                     <Searchbar
-                        placeholder="Enter user ID"
-                        style={styles.searchContainer}
-                        inputStyle={{color:colors.BLACK}}
-                        onChangeText={text => setQuery(text)}
-                        onIconPress={filterResult}
-                        // keyboardType='number-pad'   
-                     />
-                     <DataTable.Header>
-                        <DataTable.Title>ID</DataTable.Title>
-                        <DataTable.Title>Recharge</DataTable.Title>
-                        <DataTable.Title>Card payment</DataTable.Title>
-                        <DataTable.Title>Virtual payment</DataTable.Title>
-                     </DataTable.Header>
-
-                     {
-                     display
-                     .slice(
-                        page*itemsPerPage,
-                        page*itemsPerPage + itemsPerPage
-                     )
-                     .map(user => (
-                        <DataTable.Row key={user.msisdn}>
-                           <DataTable.Cell>{user.msisdn}</DataTable.Cell>
-                           <DataTable.Cell>{user.sum_recharge}</DataTable.Cell>
-                           <DataTable.Cell>{user.sum_C}</DataTable.Cell>
-                           <DataTable.Cell>{user.sum_V}</DataTable.Cell>
-                        </DataTable.Row>
-                     ))
-                     }
-                  <Text style={{marginTop:20, marginLeft: 10, color:'grey'}}>&lt;&lt; Swipe left to see more</Text>
-                  <Text></Text>
-                  <DataTable.Pagination
-                     page={page}
-                     numberOfPages={numberOfPages}
-                     onPageChange={page => setPage(page)}
-                     label={`${page+1} of ${numberOfPages}`}
-                     // style={{justifyContent: 'flex-start'}}
-                  />
-                  </DataTable>
-               </ScrollView>
+               <Table/>
             </View>
          </View>
       </ScrollView>
