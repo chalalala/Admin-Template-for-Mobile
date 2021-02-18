@@ -197,6 +197,7 @@ const styles = StyleSheet.create({
    searchContainer: {
       elevation: 0,
       borderBottomWidth: 1,
-      borderBottomColor: 'lightgrey'
+      borderBottomColor: 'lightgrey',
+      width: 300
    }
 });
