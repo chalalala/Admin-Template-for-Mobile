@@ -4,13 +4,8 @@ import { colors, chartConfig, screenWidth, containerWidth } from '../helpers/con
 import GradientBackground from '../helpers/GradientBackground';
 
 import {
-   LineChart,
    BarChart,
-   PieChart,
-   ProgressChart,
-   ContributionGraph,
-   StackedBarChart
-} from "react-native-chart-kit";
+   PieChart} from "react-native-chart-kit";
 import { rateUser } from '../data/rateUser.js';
 import { history_calls } from '../data/history_calls';
 

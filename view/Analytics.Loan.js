@@ -10,18 +10,14 @@ import { LineChart } from "react-native-chart-kit";
 const Table = () =>{
    const [query, setQuery] = React.useState("");
    const [page, setPage] = React.useState(0);
-   const [display, setDisplay] = React.useState(data);
    const [data, setData] = React.useState([]);
    const itemsPerPage = 5;
    const [numberOfPages, setNoPages] = React.useState(0);
    const [loading, setLoading] = React.useState(true);
    
-   const filterResult = () => {
-      if (!query){
-         getData();
-      }
-      else{
-         setDisplay(display.filter(user => user.msisdn.includes(query)))
+   const filterResult = (user) => {
+      if (user.msisdn.includes(query)){
+         return true;
       }
    }
 
@@ -31,7 +27,7 @@ const Table = () =>{
       .then(response => {
          setNoPages(Math.ceil(response.data.length / itemsPerPage));
          // console.log(response.data);
-         setDisplay(response.data);
+         setData(response.data);
          setLoading(false);
       })
       .catch(function (error) {
@@ -70,7 +66,8 @@ const Table = () =>{
                </DataTable.Header>
 
                {
-               display
+               data
+               .filter(item => filterResult(item))
                .slice(
                   page*itemsPerPage,
                   page*itemsPerPage + itemsPerPage
